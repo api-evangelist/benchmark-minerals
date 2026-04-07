@@ -5,10 +5,10 @@ apis:
   - aid: benchmark-minerals:benchmark-minerals
     name: Benchmark Minerals
     tags:
-      - Mining
-      - Lithium Ion
       - Batteries
+      - Lithium Ion
       - Market Intelligence
+      - Mining
     humanURL: ' https://www.benchmarkminerals.com/api'
     properties:
       - url: ' https://www.benchmarkminerals.com/api'
@@ -20,10 +20,10 @@ apis:
       cobalt, and graphite, as well as insights into market trends and developments.
 name: Benchmark Minerals
 tags:
-  - Mining
-  - Lithium Ion
   - Batteries
+  - Lithium Ion
   - Market Intelligence
+  - Mining
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
