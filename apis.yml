@@ -56,6 +56,8 @@ apis:
       - type: APIReference
         url: https://www.benchmarkminerals.com/api/docs
 common:
+  - type: DomainSecurity
+    url: security/benchmark-minerals-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/benchmark-mineral-intelligence
   - type: Website
