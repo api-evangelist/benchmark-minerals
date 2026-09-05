@@ -1,0 +1,182 @@
+generated: '2026-09-04'
+method: probed
+source: https://mcp.benchmarkminerals.com/.well-known/oauth-protected-resource + openapi/benchmark-minerals-prices-api.yml
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+docs: null
+note: Benchmark runs two distinct permission vocabularies and publishes neither in prose. (1) The MCP
+  gateway uses real OAuth 2.0 scopes, discoverable anonymously in its RFC 9728 protected-resource document.
+  (2) The REST OpenAPI declares scope STRINGS on an apiKey security scheme — syntactically legal but semantically
+  unusual, since an API key carries no scope grant; they read as an entitlement map describing which market
+  a key must be subscribed to. Both sets are recorded verbatim; neither is invented.
+scope_sets:
+- surface: MCP gateway
+  endpoint: https://mcp.benchmarkminerals.com/mcp
+  type: oauth2
+  issuer: https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_GuiZRnNNK
+  evidence: https://mcp.benchmarkminerals.com/.well-known/oauth-protected-resource (HTTP 200) and the
+    WWW-Authenticate challenge
+  scopes:
+  - name: benchmark-tools/sandbox.read
+    description: Read access to the sandbox dataset through the MCP tool surface.
+  - name: benchmark-tools/production.read
+    description: Read access to the production dataset through the MCP tool surface.
+- surface: Prices REST API
+  endpoint: https://api.benchmarkminerals.com/v2
+  type: apiKey-declared-scopes
+  evidence: per-operation security[].api_key[] arrays in https://www.benchmarkminerals.com/prices-api.yml
+  scopes:
+  - name: anodes:read
+    operations:
+    - anode-index
+    - anode-list-prices
+    - anode-summary
+    operation_count: 3
+  - name: black-mass:read
+    operations:
+    - black-mass-index
+    - black-mass-list-prices
+    - black-mass-summary
+    operation_count: 3
+  - name: cathodes:read
+    operations:
+    - cathodes-index
+    - cathodes-list-prices
+    - cathodes-summary
+    operation_count: 3
+  - name: cobalt:read
+    operations:
+    - cobalt-index
+    - cobalt-list-prices
+    - cobalt-summary
+    operation_count: 3
+  - name: electrolyte:read
+    operations:
+    - electrolyte-list-prices
+    - electrolyte-summary
+    operation_count: 2
+  - name: lithium-ion-battery-raw-material:read
+    operations:
+    - lithium-ion-battery-raw-material-index
+    operation_count: 1
+  - name: lithium-ion-battery:read
+    operations:
+    - lithium-ion-battery-index
+    - lithium-ion-battery-list-prices
+    - lithium-ion-battery-summary
+    operation_count: 3
+  - name: lithium:read
+    operations:
+    - lithium-index
+    - lithium-list-prices
+    - lithium-summary
+    operation_count: 3
+  - name: manganese:read
+    operations:
+    - manganese-list-prices
+    - manganese-summary
+    operation_count: 2
+  - name: natural-graphite:read
+    operations:
+    - natural-graphite-index
+    - natural-graphite-list-prices
+    - natural-graphite-summary
+    operation_count: 3
+  - name: nickel:read
+    operations:
+    - nickel-index
+    - nickel-list-prices
+    - nickel-summary
+    operation_count: 3
+  - name: prices:anodes
+    operations:
+    - anode-index
+    - anode-list-prices
+    - anode-summary
+    operation_count: 3
+  - name: prices:black-mass
+    operations:
+    - black-mass-index
+    - black-mass-list-prices
+    - black-mass-summary
+    operation_count: 3
+  - name: prices:cathodes
+    operations:
+    - cathodes-list-prices
+    - cathodes-summary
+    operation_count: 2
+  - name: prices:cobalt
+    operations:
+    - cobalt-index
+    - cobalt-list-prices
+    - cobalt-summary
+    operation_count: 3
+  - name: prices:electrolyte
+    operations:
+    - electrolyte-list-prices
+    - electrolyte-summary
+    operation_count: 2
+  - name: prices:lithium
+    operations:
+    - lithium-index
+    - lithium-list-prices
+    - lithium-summary
+    operation_count: 3
+  - name: prices:lithium-ion-batteries
+    operations:
+    - lithium-ion-battery-index
+    - lithium-ion-battery-list-prices
+    - lithium-ion-battery-summary
+    operation_count: 3
+  - name: prices:manganese
+    operations:
+    - manganese-list-prices
+    - manganese-summary
+    operation_count: 2
+  - name: prices:natural-graphite
+    operations:
+    - natural-graphite-index
+    - natural-graphite-list-prices
+    - natural-graphite-summary
+    operation_count: 3
+  - name: prices:nickel
+    operations:
+    - nickel-index
+    - nickel-list-prices
+    - nickel-summary
+    operation_count: 3
+  - name: prices:rare-earths
+    operations:
+    - rare-earths-index
+    - rare-earths-list-prices
+    - rare-earths-summary
+    operation_count: 3
+  - name: prices:synthetic-graphite
+    operations:
+    - synthetic-graphite-index
+    - synthetic-graphite-list-prices
+    - synthetic-graphite-summary
+    operation_count: 3
+  - name: rare-earths:read
+    operations:
+    - rare-earths-index
+    - rare-earths-list-prices
+    - rare-earths-summary
+    operation_count: 3
+  - name: spotlight:read
+    operations:
+    - spotlight-list-prices
+    operation_count: 1
+  - name: synthetic-graphite:read
+    operations:
+    - synthetic-graphite-index
+    - synthetic-graphite-list-prices
+    - synthetic-graphite-summary
+    operation_count: 3
+summary:
+  oauth_scopes: 2
+  spec_declared_scopes: 26
+  pattern: two per market — <market>:read and prices:<market> — all read-only; no write scope exists anywhere
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

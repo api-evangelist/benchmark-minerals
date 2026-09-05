@@ -1,0 +1,86 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Benchmark Mineral Intelligence Prices API
+  version: 1.0.0
+  x-generated: '2026-09-04'
+  x-method: generated
+  x-source: openapi/benchmark-minerals-prices-api.yml
+  x-note: 'Non-destructive enhancements over the provider contract. The original spec in openapi/_original/
+    is never mutated. These actions record what is missing rather than changing behaviour: contact and
+    terms, a warning on the internal localhost server, tag definitions for the 14 markets, key-provisioning
+    prose on the security scheme, a document-level security requirement, and summaries for the three operations
+    that ship without one (nickel-list-prices, black-mass-list-prices, rare-earths-list-prices).'
+extends: https://www.benchmarkminerals.com/prices-api.yml
+actions:
+- target: $.info
+  description: Record the real production base and the provenance of this contract as captured by API
+    Evangelist.
+  update:
+    x-apis-io-source: https://www.benchmarkminerals.com/prices-api.yml
+    x-apis-io-captured: '2026-09-04'
+    x-api-base: https://api.benchmarkminerals.com/v2
+    contact:
+      name: Benchmark Mineral Intelligence Support
+      url: https://www.benchmarkminerals.com/contact/a-technical-issue
+    termsOfService: https://www.benchmarkminerals.com/terms
+- target: $.servers[?(@.url=='http://localhost:3013/v2')]
+  description: Flag the internal localhost server that ships as servers[0] in the published contract;
+    a naive generated client takes servers[0] and targets the developer machine.
+  update:
+    description: INTERNAL development server present in the published contract. Not a Benchmark endpoint.
+      Use the api.benchmarkminerals.com environment instead.
+    x-internal: true
+- target: $.tags
+  description: Declare the market tags that operations already reference but the contract never defines.
+  update:
+  - name: Spotlight
+    description: Assessed prices, summaries and indices for the Spotlight market.
+  - name: Lithium
+    description: Assessed prices, summaries and indices for the Lithium market.
+  - name: Cobalt
+    description: Assessed prices, summaries and indices for the Cobalt market.
+  - name: Nickel
+    description: Assessed prices, summaries and indices for the Nickel market.
+  - name: Manganese
+    description: Assessed prices, summaries and indices for the Manganese market.
+  - name: Natural Graphite
+    description: Assessed prices, summaries and indices for the Natural Graphite market.
+  - name: Synthetic-Graphite
+    description: Assessed prices, summaries and indices for the Synthetic-Graphite market.
+  - name: Electrolyte
+    description: Assessed prices, summaries and indices for the Electrolyte market.
+  - name: Anodes
+    description: Assessed prices, summaries and indices for the Anodes market.
+  - name: Cathodes
+    description: Assessed prices, summaries and indices for the Cathodes market.
+  - name: Lithium ion Battery
+    description: Assessed prices, summaries and indices for the Lithium ion Battery market.
+  - name: Black Mass
+    description: Assessed prices, summaries and indices for the Black Mass market.
+  - name: Rare Earths
+    description: Assessed prices, summaries and indices for the Rare Earths market.
+  - name: Lithium ion Battery Raw Material
+    description: Assessed prices, summaries and indices for the Lithium ion Battery Raw Material market.
+- target: $.components.securitySchemes.api_key
+  description: Document how a caller obtains the API key, which the contract asserts but never explains.
+  update:
+    description: API key issued to Benchmark subscribers. Retrieve it from the subscription section of
+      your Benchmark account (https://www.benchmarkminerals.com/api). There is no public sign-up.
+- target: $
+  description: Apply the api_key scheme at the document level; the contract sets it per-operation only,
+    so a reader of the root sees no global security requirement.
+  update:
+    security:
+    - api_key: []
+- target: $.paths['/prices/nickel'].post
+  description: Supply the missing summary for nickel-list-prices.
+  update:
+    summary: List prices
+- target: $.paths['/prices/black-mass'].post
+  description: Supply the missing summary for black-mass-list-prices.
+  update:
+    summary: List prices
+- target: $.paths['/prices/rare-earths'].post
+  description: Supply the missing summary for rare-earths-list-prices.
+  update:
+    summary: List prices

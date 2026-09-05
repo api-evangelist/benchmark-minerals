@@ -1,0 +1,104 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/benchmark-minerals-prices-api.yml + https://www.benchmarkminerals.com/api/docs
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+description: Cross-cutting runtime semantics for the Benchmark Mineral Intelligence Prices API v2, derived
+  from the provider-published OpenAPI 3.0.3 and its info.description, plus the live MCP gateway probe.
+surface_shape:
+  style: RPC-over-POST
+  note: 'Every one of the 36 operations is a POST that carries a filter object in the request body and
+    returns data. There are no GET operations and no path or query parameters anywhere in the contract,
+    so the API is semantically read-only while being syntactically all-POST. This matters for agents:
+    POST is normally the unsafe verb, but here no operation changes provider state.'
+authentication:
+  style: api-key-header
+  header: x-api-key
+  scheme: components.securitySchemes.api_key
+  obtain: subscription section of the Benchmark account, per https://www.benchmarkminerals.com/api
+  second_surface:
+    style: oauth2-bearer
+    surface: MCP gateway
+    endpoint: https://mcp.benchmarkminerals.com/mcp
+    issuer: https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_GuiZRnNNK
+  see: authentication/benchmark-minerals-authentication.yml
+idempotency:
+  coverage: na
+  mutating_operations: 0
+  header: null
+  scope: []
+  note: 'No replay protection mechanism is documented, and none is needed: the contract declares zero
+    state-changing operations. All 36 POSTs are query operations that return price data. Recorded as `na`
+    rather than `none` so an honest absence of a write surface is not scored as a missing safeguard.'
+reversibility:
+  grade: na
+  mutating_operations: 0
+  reversal_operations: []
+  note: The API is read-only, so there is nothing to reverse. No cancel/refund/void/undo/restore operation
+    exists in the contract and none should. Windows are deliberately not asserted.
+dry_run_mode:
+  supported: na
+  note: Read-only surface; a rehearsal mode has no meaning here.
+pagination:
+  style: none
+  note: No limit/offset/cursor/page parameter exists in any request schema and no nextPage/total field
+    exists in any response schema. Result size is bounded by the caller supplied `from`/`to` date window
+    and the categories/purities/shippingRoutes/priceTypes filter arrays instead. An agent pulling a long
+    history has no server-side paging to lean on and must window by date itself.
+filtering:
+  style: request-body-arrays
+  parameters:
+  - from
+  - to
+  - categories[]
+  - purities[]
+  - shippingRoutes[]
+  - priceTypes[]
+  - currency
+  - unitOfMeasure
+  date_format: yyyy-MM-dd
+  note: Filters are declared per market DTO; the exact set varies by market.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+  note: No customer-supplied metadata field on any request or response.
+request_id_tracing:
+  documented: false
+  header: null
+  note: No correlation/request-id header is documented in the contract. The AWS edge returns x-amzn-RequestId
+    but the provider does not document it as a support handle.
+versioning:
+  style: url-path
+  current: v2
+  evidence: servers[].variables.version enum [v2]
+  note: Version is a server-template variable, so the enum is the published list of live versions. See
+    lifecycle/.
+error_envelope:
+  shape: json-array-of-validation-objects
+  rfc9457: false
+  see: errors/benchmark-minerals-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  headers: []
+  status_on_exhaustion: null
+  note: info.description states "Rate limiting is applied to manage the number of requests a client can
+    make within a defined period. The specific rate limits can be configured based on your business requirements".
+    No numbers, no headers and no 429 response are published, so the runtime signal an agent needs does
+    not exist. See rate-limits/benchmark-minerals-rate-limits.yml.
+  see: rate-limits/benchmark-minerals-rate-limits.yml
+content_negotiation:
+  request: application/json
+  response: application/json
+  only_media_type: true
+cross_links:
+- errors/benchmark-minerals-problem-types.yml
+- lifecycle/benchmark-minerals-lifecycle.yml
+- authentication/benchmark-minerals-authentication.yml
+- rate-limits/benchmark-minerals-rate-limits.yml
+- scopes/benchmark-minerals-scopes.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

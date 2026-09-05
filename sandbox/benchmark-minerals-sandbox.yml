@@ -1,0 +1,50 @@
+generated: '2026-09-04'
+method: probed
+source: openapi/benchmark-minerals-prices-api.yml servers[] + https://mcp.benchmarkminerals.com/.well-known/oauth-protected-resource
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+self_service: false
+public_credentials: false
+note: 'Benchmark operates non-production environments and a sandbox-scoped agent surface, but publishes
+  no self-service sandbox: there is no test key, no public console and no test-data page. Everything below
+  is provider-published evidence that a sandbox EXISTS for entitled subscribers; no test values are invented,
+  because none are published.'
+environments:
+- name: production
+  host: api.benchmarkminerals.com
+  base: https://api.benchmarkminerals.com/v2
+  evidence: servers[].variables.environment.enum default "api"
+- name: development
+  host: dev-api.benchmarkminerals.com
+  base: https://dev-api.benchmarkminerals.com/v2
+  evidence: servers[].variables.environment.enum value "dev-api"
+  probe:
+    status: 403
+    note: AWS API Gateway Forbidden without a key — the host is live and gated
+- name: qa
+  host: qa-api.benchmarkminerals.com
+  base: https://qa-api.benchmarkminerals.com/v2
+  evidence: servers[].variables.environment.enum value "qa-api"
+- name: localhost
+  host: localhost:3013
+  evidence: servers[0] in the published contract
+  note: An internal development server left in the shipped spec. It is the first entry, so a naive client
+    that takes servers[0] will target the caller's own machine. Worth reporting to the provider.
+agent_sandbox:
+  surface: MCP gateway
+  endpoint: https://mcp.benchmarkminerals.com/mcp
+  scope: benchmark-tools/sandbox.read
+  evidence: scopes_supported in https://mcp.benchmarkminerals.com/.well-known/oauth-protected-resource
+    (HTTP 200)
+  note: A dedicated sandbox scope sits alongside benchmark-tools/production.read, so the tool surface
+    is explicitly split test-vs-live at the token level.
+test_data:
+  published: false
+  test_keys: []
+  fixtures: []
+  time_simulation: false
+  note: No test API key, magic identifier, fixture or clock-control facility is published.
+access_path: Subscription first, then retrieve the key from the account subscription section — https://www.benchmarkminerals.com/api
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

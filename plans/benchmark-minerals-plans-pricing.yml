@@ -3,151 +3,91 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Benchmark Minerals
 providerId: benchmark-minerals
+generated: '2026-09-04'
+method: searched
+source: https://www.benchmarkminerals.com/plans
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Batteries
-  - Cobalt
-  - Critical Minerals
-  - Electric Vehicles
-  - Energy Transition
-  - Graphite
-  - Lithium
-  - Lithium Ion
-  - Market Intelligence
-  - Mining
-  - Nickel
-  - Price Reporting
-  - Rare Earths
-  - Supply Chain
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+modified: '2026-09-04'
+supersedes: The 2026-05-04 bulk-sweep scaffold that invented a Free/Professional/Enterprise ladder with
+  a 1,000-request free quota and 10 rpm limits. None of that was published by Benchmark. It is replaced
+  here by what the pricing page actually says.
+description: Benchmark Mineral Intelligence publishes NO prices. Subscriptions are assembled as bespoke
+  packages and every tier routes to a sales conversation. The tiers below are named on the plans page
+  but carry no monetary figures, so price, currency and billing period are recorded null rather than guessed.
+pricing_model: contact-sales
+currency: null
+billing_period: null
+plan_count: 3
+published_price_count: 0
+free_tier: false
+trial: false
+self_service_signup: false
 plans:
-  - id: benchmark-minerals-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Benchmark Minerals API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Benchmark Minerals API
-  - id: benchmark-minerals-pro
-    name: Professional
-    type: paid
-    description: Production tier for Benchmark Minerals. Provides higher quotas, priority support, and
-      access to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Benchmark Minerals API
-  - id: benchmark-minerals-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Benchmark Minerals. Includes dedicated capacity, contractual
-      SLAs, security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Benchmark Minerals API
+- id: benchmark-small-team
+  name: Small Team
+  type: subscription
+  price: null
+  currency: null
+  billing_period: null
+  seats: up to 10 users
+  included:
+  - Intelligence service
+  - access to 2,500+ energy transition market prices
+  - real-time analysis in video, article and report formats
+  overage: null
+  api_access: not stated on the plans page
+- id: benchmark-mid-scale
+  name: Mid-Scale
+  type: subscription
+  price: null
+  currency: null
+  billing_period: null
+  seats: up to 20 users
+  included:
+  - Intelligence service
+  - 2,500+ market prices
+  - real-time analysis
+  overage: null
+  api_access: not stated on the plans page
+- id: benchmark-enterprise
+  name: Enterprise
+  type: enterprise
+  price: null
+  currency: null
+  billing_period: null
+  seats: unlimited
+  included:
+  - unlimited seats
+  - SSO
+  - advanced permissions
+  - full data integration
+  overage: null
+  api_access: '"full data integration" is the tier that names integration explicitly'
+bundles:
+- name: Upstream Essentials
+  coverage: mining through processing
+- name: Midstream to End-Use
+  coverage: cathode through BESS and EV
+- name: Full Battery Value Chain
+  coverage: comprehensive coverage of the chain
+add_ons:
+- name: Benchmark API
+  url: https://www.benchmarkminerals.com/api
+  note: Listed as a separate tool offering; the plans page does not state which tiers include it or what
+    it costs.
+quotas:
+  published: false
+  note: No request quota, seat-based API cap or overage rate is published anywhere.
+purchase_path:
+- step: Contact / book a demo
+  url: https://www.benchmarkminerals.com/book-a-demo
+- step: Bespoke proposal from sales
+gaps:
+- issue: no price is published at any tier
+  impact: a buyer cannot budget, and an agent cannot compare Benchmark to a competitor without a sales
+    call
+- issue: API entitlement per tier is unstated
+  impact: a developer cannot tell from the pricing page whether their subscription includes API access
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,204 @@
+generated: '2026-09-04'
+method: probed
+source: live HTTP probes of every host in the record, 2026-09-04
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+note: 'Only one host in the estate serves a real well-known document: the MCP gateway at mcp.benchmarkminerals.com
+  publishes an RFC 9728 OAuth protected-resource descriptor, which is what points at the Cognito issuer.
+  The marketing/docs hosts (www, apex, source) return the site 404 shell for every path, and the REST
+  API host api.benchmarkminerals.com answers 403 Forbidden to everything unauthenticated, including /.well-known/*,
+  so absence there is unproven rather than confirmed.'
+hosts:
+- host: mcp.benchmarkminerals.com
+  role: MCP gateway
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: well-known/benchmark-minerals-mcp-oauth-protected-resource.json
+    note: RFC 9728 protected-resource metadata; names the Cognito authorization server and two scopes.
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    file: well-known/benchmark-minerals-mcp-oauth-protected-resource.json
+    note: Identical body to the bare path.
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+    file: null
+    note: Gateway replies "Http operation is not supported for gateway protocol type MCP"; the authorization
+      server metadata lives on the Cognito issuer instead.
+  - path: /.well-known/openid-configuration
+    status: 400
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 400
+    file: null
+  - path: /.well-known/agent.json
+    status: 400
+    file: null
+  - path: /.well-known/security.txt
+    status: 400
+    file: null
+- host: cognito-idp.eu-west-2.amazonaws.com
+  role: authorization server named by the protected-resource document
+  documents:
+  - path: /eu-west-2_GuiZRnNNK/.well-known/openid-configuration
+    status: 200
+    file: well-known/benchmark-minerals-cognito-openid-configuration.json
+    note: OIDC discovery for the Benchmark MCP user pool; its endpoints are branded on mcp-auth.benchmarkminerals.com.
+  - path: /eu-west-2_GuiZRnNNK/.well-known/jwks.json
+    status: 200
+    file: null
+    note: Two RS256 signing keys; not saved (rotating key material).
+- host: www.benchmarkminerals.com
+  role: marketing + API docs
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: benchmarkminerals.com
+  role: apex (301 to www)
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 301
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+    file: null
+  - path: /.well-known/api-catalog
+    status: 301
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null
+  - path: /.well-known/agent.json
+    status: 301
+    file: null
+- host: source.benchmarkminerals.com
+  role: Benchmark Source content platform
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: api.benchmarkminerals.com
+  role: REST API host (AWS API Gateway)
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+    note: 403 Forbidden without an x-api-key; absence unproven
+- host: dev-api.benchmarkminerals.com
+  role: development environment from servers[] enum
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+summary:
+  hosts_probed: 7
+  documents_served: 3
+  security_txt: false
+  api_catalog: false
+  agent_card: false
+  oauth_protected_resource: true
+  openid_configuration: true
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,104 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/benchmark-minerals-prices-api.yml
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+format: custom-json-array
+rfc9457: false
+note: The Benchmark Prices API does NOT use RFC 9457 application/problem+json. The only typed error body
+  in the contract is ValidationRequestError, a JSON array of {type,msg,path,location} objects returned
+  on 400. 401 and 403 are declared with a description only and no response schema, so an agent cannot
+  parse a machine-readable reason for an auth failure.
+envelope:
+  media_type: application/json
+  shape: array
+  fields:
+  - type
+  - msg
+  - path
+  - location
+  example_source: components.schemas.ValidationRequestError
+problem_types:
+- status: 400
+  title: Bad Request
+  detail: Request body failed validation. The response body is a JSON ARRAY of validation objects, one
+    per offending field.
+  schema: ValidationRequestError
+  documented_operations: 10
+  operations:
+  - spotlight-list-prices
+  - lithium-list-prices
+  - cobalt-list-prices
+  - manganese-list-prices
+  - natural-graphite-list-prices
+  - synthetic-graphite-list-prices
+  - electrolyte-list-prices
+  - anode-list-prices
+  - cathodes-list-prices
+  - lithium-ion-battery-list-prices
+- status: 401
+  title: Unauthorized
+  detail: The x-api-key header is missing, malformed, or not recognised. Obtain the key from the subscription
+    section of your Benchmark account.
+  schema: null
+  documented_operations: 33
+  operations:
+  - spotlight-list-prices
+  - lithium-list-prices
+  - lithium-summary
+  - lithium-index
+  - cobalt-list-prices
+  - cobalt-summary
+  - cobalt-index
+  - nickel-summary
+  - nickel-index
+  - manganese-list-prices
+  - manganese-summary
+  - natural-graphite-list-prices
+  - natural-graphite-summary
+  - natural-graphite-index
+  - synthetic-graphite-list-prices
+  - synthetic-graphite-summary
+  - synthetic-graphite-index
+  - electrolyte-list-prices
+  - electrolyte-summary
+  - anode-list-prices
+  - anode-summary
+  - anode-index
+  - cathodes-list-prices
+  - cathodes-summary
+  - cathodes-index
+  - lithium-ion-battery-list-prices
+  - lithium-ion-battery-summary
+  - lithium-ion-battery-index
+  - black-mass-summary
+  - black-mass-index
+  - rare-earths-summary
+  - rare-earths-index
+  - lithium-ion-battery-raw-material-index
+- status: 403
+  title: Forbidden
+  detail: The API key is valid but the subscription does not entitle the caller to this market or price
+    series.
+  schema: null
+  documented_operations: 7
+  operations:
+  - spotlight-list-prices
+  - lithium-list-prices
+  - lithium-summary
+  - lithium-index
+  - cobalt-list-prices
+  - cobalt-summary
+  - cobalt-index
+gaps:
+- issue: 401 declared on 33 of 36 operations but with no response schema
+  impact: agents cannot distinguish a missing key from an expired one
+- issue: 403 declared on only 7 of 36 operations though entitlement is per-market
+  impact: entitlement failures on the other 29 operations are undocumented
+- issue: no 429 declared anywhere
+  impact: the description states rate limiting is applied, but no throttling response is in the contract
+- issue: no 5xx declared anywhere
+  impact: server-error handling is undefined in the contract
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,131 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/benchmark-minerals-prices-api.yml
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+description: 'Entity graph derived from the $ref links in the Benchmark Mineral Intelligence Prices API
+  OpenAPI. The model is a price-series star: every market endpoint returns a Grade record that joins reference
+  dimensions (category, purity, shipping route, unit of measure, currency, price type) to a time series
+  of assessed values.'
+identifier_scheme:
+  style: uuid-v4
+  evidence: components.schemas.Category.id example 788353e5-3d01-4836-a333-9da2dc06141c
+  note: Reference dimensions carry opaque UUID ids; there are no id prefixes and no GET-by-id endpoints,
+    so ids are join keys only, not addressable resources.
+entities:
+- name: Grade
+  description: A priced product grade within a market (the row returned by every /prices/{market} operation).
+  schema: inline item of *PricesApiResponse.data
+  key: name
+- name: Series
+  description: A dated price observation with low/mid/high values.
+  schema: Series
+  fields:
+  - date
+  - valueLow
+  - valueMid
+  - valueHigh
+- name: Category
+  description: Chemical/product category, e.g. Lithium Carbonate.
+  schema: Category
+  fields:
+  - id
+  - name
+  - chemicalCode
+  - alias
+  - isSustainable
+- name: Purity
+  description: Assessed purity specification, e.g. Min 99.0%.
+  schema: Purity
+  fields:
+  - id
+  - name
+- name: ShippingRoute
+  description: Incoterm/route the price is assessed on, e.g. CIF Asia.
+  schema: ShippingRoute
+  fields:
+  - id
+  - name
+  - alias
+- name: UnitOfMeasure
+  description: Unit the price is quoted in.
+  schema: UnitOfMeasure
+- name: Currency
+  description: Currency the price is quoted in.
+  schema: Currency
+- name: PriceType
+  description: Assessment type, e.g. Price, Daily Price Indicator, Global Weighted Average.
+  schema: PriceType
+  fields:
+  - id
+  - name
+  - order
+- name: DataSummary
+  description: Change statistics over a grade (daily, bi-weekly, monthly, latest).
+  schema: DataSummary
+- name: DataSummaryIndex
+  description: Change statistics over an index (today, last, YoY, YTD, latest).
+  schema: DataSummaryIndex
+- name: Index
+  description: A composite index across grades, returned by every /index operation.
+  schema: '*IndexDTO / *IndexApiResponse'
+relationships:
+- from: Grade
+  to: Category
+  type: has_one
+  via: category
+- from: Grade
+  to: Purity
+  type: has_one
+  via: purity
+- from: Grade
+  to: ShippingRoute
+  type: has_one
+  via: shippingRoute
+- from: Grade
+  to: UnitOfMeasure
+  type: has_one
+  via: unitOfMeasure
+- from: Grade
+  to: Currency
+  type: has_one
+  via: currency
+- from: Grade
+  to: PriceType
+  type: has_one
+  via: priceType
+- from: Grade
+  to: Series
+  type: has_many
+  via: series
+- from: Index
+  to: DataSummaryIndex
+  type: has_one
+  via: summary
+- from: Grade
+  to: DataSummary
+  type: has_one
+  via: summary (summary operations only)
+markets:
+- Anodes
+- Black Mass
+- Cathodes
+- Cobalt
+- Electrolyte
+- Lithium
+- Lithium ion Battery
+- Lithium ion Battery Raw Material
+- Manganese
+- Natural Graphite
+- Nickel
+- Rare Earths
+- Spotlight
+- Synthetic-Graphite
+shapes_per_market:
+  list: POST /prices/{market} -> grades + full series
+  summary: POST /prices/{market}/summary -> grades + change statistics
+  index: POST /prices/{market}/index -> composite index series
+schema_count: 95
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

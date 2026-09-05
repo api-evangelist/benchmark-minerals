@@ -1,0 +1,1 @@
+{"authorization_servers":["https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_GuiZRnNNK"],"resource":"https://benchmark-mcp-gateway-1yzx1kmg53.gateway.bedrock-agentcore.eu-west-2.amazonaws.com/mcp","scopes_supported":["benchmark-tools/sandbox.read","benchmark-tools/production.read"]}

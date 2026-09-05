@@ -1,0 +1,74 @@
+generated: '2026-09-04'
+method: probed
+source: https://mcp.benchmarkminerals.com/mcp (live JSON-RPC probe, 2026-09-04)
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+name: Benchmark Mineral Intelligence MCP Gateway
+status: live
+description: 'A first-party remote MCP server operated by Benchmark Mineral Intelligence on their own
+  subdomain, fronting an AWS Bedrock AgentCore Gateway. It is undocumented on the public website — it
+  was found by probing, not by reading a docs page — but ownership is not in doubt: the endpoint is on
+  benchmarkminerals.com, the gateway is named benchmark-mcp-gateway, the OAuth scopes are namespaced benchmark-tools/*,
+  and the Cognito authorization server is branded on mcp-auth.benchmarkminerals.com.'
+deployment:
+  mode: remote
+  endpoint: https://mcp.benchmarkminerals.com/mcp
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+transport: streamable-http
+protocol: MCP JSON-RPC 2.0
+evidence:
+- check: DNS
+  result: mcp.benchmarkminerals.com CNAME d2h8xmsxpfwmx1.cloudfront.net — a dedicated record, not a wildcard
+    (control subdomain zzz-nonexistent-control.benchmarkminerals.com returns NXDOMAIN)
+- check: POST tools/list
+  url: https://mcp.benchmarkminerals.com/mcp
+  http_status: 401
+  body: '{"jsonrpc":"2.0","id":0,"error":{"code":-32001,"message":"Missing Bearer token"}}'
+  result: a real MCP JSON-RPC envelope, not an HTML shell or a generic edge error
+- check: WWW-Authenticate
+  result: Bearer error="invalid_token", scope="benchmark-tools/sandbox.read benchmark-tools/production.read",
+    resource_metadata="https://benchmark-mcp-gateway-1yzx1kmg53.gateway.bedrock-agentcore.eu-west-2.amazonaws.com/.well-known/oauth-protected-resource"
+- check: GET on a non-MCP path
+  url: https://mcp.benchmarkminerals.com/zzz-control-path
+  http_status: 400
+  body: '{"success":false,"error":"Http operation is not supported for gateway protocol type MCP"}'
+  result: confirms the host is an MCP-protocol gateway and rules out a catch-all 200
+- check: origin gateway
+  url: https://benchmark-mcp-gateway-1yzx1kmg53.gateway.bedrock-agentcore.eu-west-2.amazonaws.com/mcp
+  http_status: 401
+  result: same JSON-RPC challenge; mcp.benchmarkminerals.com is a branded alias of the provider AgentCore
+    gateway
+authentication:
+  type: oauth2
+  flow: bearer token (RFC 6750) validated by the gateway
+  issuer: https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_GuiZRnNNK
+  authorization_endpoint: https://mcp-auth.benchmarkminerals.com/oauth2/authorize
+  token_endpoint: https://mcp-auth.benchmarkminerals.com/oauth2/token
+  revocation_endpoint: https://mcp-auth.benchmarkminerals.com/oauth2/revoke
+  protected_resource_metadata: https://mcp.benchmarkminerals.com/.well-known/oauth-protected-resource
+  scopes:
+  - benchmark-tools/sandbox.read
+  - benchmark-tools/production.read
+  see: scopes/benchmark-minerals-scopes.yml
+tools:
+  count: null
+  list: []
+  note: tools/list is auth-gated behind a Cognito bearer token, so the real tool set and its inputSchemas
+    could not be introspected anonymously. No tool list is invented here. The two published scopes (benchmark-tools/sandbox.read
+    and benchmark-tools/production.read) indicate a read-only tool surface split across a sandbox and
+    a production dataset, mirroring the read-only REST contract.
+related_surfaces:
+- type: OpenAPI
+  url: https://www.benchmarkminerals.com/prices-api.yml
+  base: https://api.benchmarkminerals.com/v2
+gaps:
+- issue: the MCP server is not mentioned anywhere on benchmarkminerals.com
+  impact: agents and buyers cannot discover it; only a probe finds it
+- issue: no /.well-known/api-catalog or llms.txt advertises the endpoint
+  impact: no machine-discoverable path from the marketing site to the agent surface
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

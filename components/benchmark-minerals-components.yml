@@ -1,0 +1,51 @@
+generated: '2026-09-04'
+method: searched
+source: https://www.benchmarkminerals.com/excel-add-in, /app, /price-dashboard, /api/docs
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+note: Benchmark ships no embeddable web components or element libraries for developers. What it does ship
+  is a set of first-party CLIENT surfaces over the same price data — an Excel add-in, a mobile/web app
+  and a hosted price dashboard. They are recorded here because they are the delivery channels a buyer
+  actually uses, but none of them is an embeddable component a developer drops into their own product.
+families:
+- name: Spreadsheet
+  components:
+  - name: Benchmark Excel Add-In
+    type: office-add-in
+    url: https://www.benchmarkminerals.com/excel-add-in
+    distribution: https://appsource.microsoft.com/en-us/product/office/wa200007134?tab=overview
+    auth: existing Benchmark log-in
+    capabilities:
+    - import subscribed price data into any workbook
+    - filter by mineral/product type, shipping route and date range
+    - refresh prices in place as new assessments publish
+    embeddable: false
+- name: Hosted apps
+  components:
+  - name: Benchmark App
+    type: hosted-app
+    url: https://www.benchmarkminerals.com/app
+    embeddable: false
+  - name: Price Dashboard
+    type: hosted-dashboard
+    url: https://www.benchmarkminerals.com/price-dashboard
+    embeddable: false
+  - name: Benchmark Source
+    type: content-platform
+    url: https://source.benchmarkminerals.com
+    embeddable: false
+- name: Documentation
+  components:
+  - name: openapi-explorer
+    type: third-party web component
+    version: 2.2.732
+    loader: https://unpkg.com/openapi-explorer@2.2.732/dist/browser/openapi-explorer.min.js
+    used_on: https://www.benchmarkminerals.com/api/docs
+    first_party: false
+    note: Not a Benchmark component — it is the renderer Benchmark uses for its own API reference. Recorded
+      because it is why the docs page is a JS shell and why the spec URL is only discoverable in the page
+      source.
+embeddable_component_count: 0
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

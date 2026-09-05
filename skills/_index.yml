@@ -1,0 +1,69 @@
+generated: '2026-09-04'
+method: generated
+source: openapi/benchmark-minerals-prices-api.yml + conventions/benchmark-minerals-conventions.yml + errors/benchmark-minerals-problem-types.yml
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+api: https://api.benchmarkminerals.com/v2
+note: Packaged agent skills generated from the provider-published OpenAPI. Benchmark publishes no skills,
+  no AGENTS.md and no llms.txt of its own — searched first, none found. Every operationId referenced below
+  is verified present in the contract; none is invented.
+skills:
+- name: benchmark-minerals-pull-price-series
+  file: skills/benchmark-minerals-pull-price-series.md
+  description: Pull an assessed price time series for any Benchmark market (lithium, cobalt, nickel, graphite,
+    cathode, anode, battery cells, black mass, rare earths and more) over a date window, filtered by category,
+    purity, shipping route and price type.
+  operations:
+  - lithium-list-prices
+  - cobalt-list-prices
+  - nickel-list-prices
+  - manganese-list-prices
+  - natural-graphite-list-prices
+  - synthetic-graphite-list-prices
+  - electrolyte-list-prices
+  - anode-list-prices
+  - cathodes-list-prices
+  - lithium-ion-battery-list-prices
+  - black-mass-list-prices
+  - rare-earths-list-prices
+  - spotlight-list-prices
+  operation_count: 13
+- name: benchmark-minerals-market-movement-summary
+  file: skills/benchmark-minerals-market-movement-summary.md
+  description: Get the current level and the daily, bi-weekly, monthly and latest percentage change for
+    grades in a Benchmark market, without pulling the full price history.
+  operations:
+  - lithium-summary
+  - cobalt-summary
+  - nickel-summary
+  - manganese-summary
+  - natural-graphite-summary
+  - synthetic-graphite-summary
+  - electrolyte-summary
+  - anode-summary
+  - cathodes-summary
+  - lithium-ion-battery-summary
+  - black-mass-summary
+  - rare-earths-summary
+  operation_count: 12
+- name: benchmark-minerals-track-composite-index
+  file: skills/benchmark-minerals-track-composite-index.md
+  description: Track Benchmark composite price indices across a market or across the battery raw-material
+    basket, for contract indexation and portfolio benchmarking.
+  operations:
+  - lithium-index
+  - cobalt-index
+  - nickel-index
+  - natural-graphite-index
+  - synthetic-graphite-index
+  - anode-index
+  - cathodes-index
+  - lithium-ion-battery-index
+  - black-mass-index
+  - rare-earths-index
+  - lithium-ion-battery-raw-material-index
+  operation_count: 11
+skill_count: 3
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

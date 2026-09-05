@@ -1,0 +1,66 @@
+generated: '2026-09-04'
+method: searched
+source: https://www.benchmarkminerals.com/prices-api.yml + https://www.benchmarkminerals.com/api/docs
+  + site probe
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+versioning:
+  scheme: url-path
+  current_version: v2
+  spec_info_version: '2.0'
+  base: https://api.benchmarkminerals.com/v2
+  published_versions:
+  - v2
+  evidence: servers[1].variables.version.enum in https://www.benchmarkminerals.com/prices-api.yml
+  stability_statement: 'info.description: "All endpoints of the Benchmark Minerals Prices API follow a
+    clear and logical structure, with versioning included in the URL to ensure backward compatibility."'
+environments:
+- name: production
+  host: api.benchmarkminerals.com
+  source: servers[].variables.environment.enum (default)
+- name: development
+  host: dev-api.benchmarkminerals.com
+  source: servers[].variables.environment.enum
+- name: qa
+  host: qa-api.benchmarkminerals.com
+  source: servers[].variables.environment.enum
+- name: localhost
+  host: localhost:3013
+  source: servers[0] — an internal development server left in the published contract
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: 'No deprecation or sunset policy is published, and no operation, parameter or schema in the contract
+    carries deprecated: true. RFC 8594 Sunset/Deprecation headers are not documented. No Deprecation pointer
+    is emitted because none exists to point at.'
+status_page:
+  published: false
+  url: null
+  probes:
+  - url: https://www.benchmarkminerals.com/status
+    status: 404
+  - url: https://status.benchmarkminerals.com
+    status: null
+    note: host does not resolve
+  note: No status page found. No StatusPage pointer emitted.
+sla:
+  published: false
+  note: No public SLA. info.description states that exceeding undefined rate limits "may result in temporary
+    suspension of access", and that API terms are governed by the bilateral supply agreement rather than
+    a published service level.
+changelog:
+  published: false
+  probes:
+  - url: https://www.benchmarkminerals.com/changelog
+    status: 404
+  note: No dated API changelog found; company announcements at /announcements are corporate news, not
+    API release notes.
+support:
+  channel: https://www.benchmarkminerals.com/contact/a-technical-issue
+  statement: info.description directs API issues to the contact team.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

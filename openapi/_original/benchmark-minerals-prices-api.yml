@@ -1,0 +1,4196 @@
+---
+openapi: 3.0.3
+info:
+  title: Benchmark Mineral Intelligence API
+  version: "2.0"
+  description: |-
+    The Benchmark API provides access to a comprehensive range of pricing data for various markets to empower your most critical energy transition decisions. This API is designed with the principles of REST architecture, ensuring scalability, flexibility, and ease of use for integrating with your systems. It follows RESTful best practices, leveraging HTTP methods and status codes for predictable interactions, allowing for seamless integration with web applications or services.
+    
+    Access to our API is secured using an API key. Users must include their unique API key in the request header x-api-key to authenticate their requests. This ensures secure and controlled access to the API’s data.
+    
+    Rate limiting is applied to manage the number of requests a client can make within a defined period. The specific rate limits can be configured based on your business requirements to ensure fair usage and avoid abuse.
+    
+    The API offers structured responses in JSON format, providing essential details for retrieving and submitting price data. It is built to handle a variety of pricing data queries and submissions efficiently.
+    
+    **API endpoint structure**
+    
+    All endpoints of the Benchmark Minerals Prices API follow a clear and logical structure, with versioning included in the URL to ensure backward compatibility:
+    
+    - Base URL: <span class="url-doc">`https://api.benchmarkminerals.com/v2`</span>
+    - Endpoints:
+      - <span class="url-doc">`/prices/cathode`</span> – Retrieves cathode pricing data with the GET method.
+    
+    Endpoints are categorised by the type of market pricing data, allowing clients to interact with different markets and products. Each request can be authenticated with the x-api-key  header, and structured responses will be provided in JSON format.
+    
+    **Terms of use**
+    
+    By accessing and using the Benchmark API, you agree to comply with the terms and conditions outlined in the supply agreement between the entity you represent and Benchmark Mineral Intelligence. key points include:
+    - data usage: the data provided through this API is intended for internal use only;
+    - rate limiting: exceeding the defined rate limits may result in temporary suspension of access;
+    - data privacy: any personal data transmitted or received through the API is subject to our privacy policy and supply agreement, which outlines the handling of sensitive information; and  
+    - intellectual property: All content, including data and API documentation, is the intellectual property of Benchmark Mineral Intelligence Limited and may not be redistributed or modified without explicit permission from Benchmark Mineral Intelligence Limited.
+    
+    **Support**
+    
+    If you encounter any issues or need assistance with using the Benchmark API, our team is here to help with any technical inquiries, troubleshooting, or general questions about the API.
+    
+    If you require access or technical support, please [contact our team](https://www.benchmarkminerals.com/contact/)
+    
+    For more details on specific endpoints, request/response structures, and authentication, please refer to the sections below.
+servers:
+  - url: http://localhost:3013/v2
+  - url: "https://{environment}.benchmarkminerals.com/{version}"
+    variables:
+      environment:
+        enum:
+          - api
+          - dev-api
+          - qa-api
+        default: api
+      version:
+        enum:
+          - v2
+        default: v2
+paths:
+  # Spotlight Prices
+  /prices/spotlight:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotlightPricesDTO'
+        required: true
+      tags:
+        - Spotlight
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotlightPricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - spotlight:read
+      operationId: spotlight-list-prices
+      summary: List spotlight prices
+      description: |
+        List the spotlight prices
+  #  Lithium
+  /prices/lithium:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumPricesDTO'
+        required: true
+      tags:
+        - Lithium
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumPricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - lithium:read
+            - prices:lithium
+      operationId: lithium-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+        - Price Type
+  /prices/lithium/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumSummaryDTO'
+        required: false
+      tags:
+        - Lithium
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - lithium:read
+            - prices:lithium
+      operationId: lithium-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Shipping region
+        - Category
+        - Purity
+        - Price Type
+  /prices/lithium/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIndexDTO'
+        required: false
+      tags:
+        - Lithium
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - lithium:read
+            - prices:lithium
+      operationId: lithium-index
+      summary: Index
+  # Cobalt
+  /prices/cobalt:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CobaltPricesDTO'
+        required: true
+      tags:
+        - Cobalt
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobaltPricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - cobalt:read
+            - prices:cobalt
+      operationId: cobalt-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+        - Price Type
+  /prices/cobalt/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CobaltSummaryDTO'
+        required: false
+      tags:
+        - Cobalt
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobaltPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - cobalt:read
+            - prices:cobalt
+      operationId: cobalt-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Shipping region
+        - Category
+        - Purity
+        - Price Type
+  /prices/cobalt/index:
+    post:
+      tags:
+        - Cobalt
+      operationId: cobalt-index
+      summary: Index
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CobaltRequestIndexDTO'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        "401":
+          description: unauthorized
+        "403":
+          description: Client does not have permission to access this resource
+      security:
+        - api_key:
+            - cobalt:read
+            - prices:cobalt
+  # Nickel
+  /prices/nickel:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NickelFindAllPricesRequest'
+        required: true
+      tags:
+        - Nickel
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NickelPricesApiResponse'
+          description: Successful operation
+      operationId: nickel-list-prices
+      description: List prices
+      security:
+        - api_key:
+            - nickel:read
+            - prices:nickel
+  /prices/nickel/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NickelFindSummaryPricesRequest'
+      tags:
+        - Nickel
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NickelPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - nickel:read
+            - prices:nickel
+      operationId: nickel-summary
+      summary: Summary
+  /prices/nickel/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NickelIndexDTO'
+        required: false
+      tags:
+        - Nickel
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NickelIndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - nickel:read
+            - prices:nickel
+      operationId: nickel-index
+      summary: Index
+  # Manganese
+  /prices/manganese:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManganesePricesDTO'
+        required: true
+      tags:
+        - Manganese
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManganesePricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - manganese:read
+            - prices:manganese
+      operationId: manganese-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/manganese/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManganeseSummaryDTO'
+        required: false
+      tags:
+        - Manganese
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManganesePricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - manganese:read
+            - prices:manganese
+      operationId: manganese-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Shipping region
+        - Category
+        - Purity
+  # Natural Graphite
+  /prices/natural-graphite:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NaturalGraphitePricesDTO'
+        required: true
+      tags:
+        - Natural Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NaturalGraphitePricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - natural-graphite:read
+            - prices:natural-graphite
+      operationId: natural-graphite-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Category
+        - Mesh size
+        - Purity
+        - Shipping route
+  /prices/natural-graphite/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NaturalGraphiteSummaryDTO'
+        required: false
+      tags:
+        - Natural Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NaturalGraphitePricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - natural-graphite:read
+            - prices:natural-graphite
+      operationId: natural-graphite-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Category
+        - Mesh size
+        - Purity
+        - Shipping route
+  /prices/natural-graphite/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NaturalGraphiteIndexDTO'
+        required: false
+      tags:
+        - Natural Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - natural-graphite:read
+            - prices:natural-graphite
+      operationId: natural-graphite-index
+      summary: Index
+  # Synthetic Graphite
+  /prices/synthetic-graphite:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyntheticGraphitePricesDTO'
+        required: true
+      tags:
+        - Synthetic-Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyntheticGraphitePricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - synthetic-graphite:read
+            - prices:synthetic-graphite
+      operationId: synthetic-graphite-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/synthetic-graphite/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyntheticGraphiteSummaryDTO'
+        required: false
+      tags:
+        - Synthetic-Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyntheticPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - synthetic-graphite:read
+            - prices:synthetic-graphite
+      operationId: synthetic-graphite-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/synthetic-graphite/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyntheticGraphiteIndexDTO'
+        required: false
+      tags:
+        - Synthetic-Graphite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyntheticGraphiteIndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - synthetic-graphite:read
+            - prices:synthetic-graphite
+      operationId: synthetic-graphite-index
+      summary: Index
+  # Electrolyte
+  /prices/electrolyte:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElectrolytePricesDTO'
+        required: true
+      tags:
+        - Electrolyte
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElectrolytePricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - electrolyte:read
+            - prices:electrolyte
+      operationId: electrolyte-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/electrolyte/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElectrolyteSummaryDTO'
+        required: false
+      tags:
+        - Electrolyte
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElectrolytePricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - electrolyte:read
+            - prices:electrolyte
+      operationId: electrolyte-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Shipping region
+        - Category
+        - Purity
+  # Anodes
+  /prices/anodes:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnodePricesDTO'
+        required: true
+      tags:
+        - Anodes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnodePricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - anodes:read
+            - prices:anodes
+      operationId: anode-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/anodes/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnodeSummaryDTO'
+        required: false
+      tags:
+        - Anodes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnodePricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - anodes:read
+            - prices:anodes
+      operationId: anode-summary
+      summary: Summary
+      description: |
+        List the summary with the possibility to filter the result by:
+        - Range of dates
+        - Shipping route
+        - Category
+        - Purity
+  /prices/anodes/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnodeIndexDTO'
+        required: false
+      tags:
+        - Anodes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - anodes:read
+            - prices:anodes
+      operationId: anode-index
+      summary: Index
+  # Cathodes
+  /prices/cathodes:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodesFindAllPricesDTO'
+        required: true
+      tags:
+        - Cathodes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CathodesPricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - cathodes:read
+            - prices:cathodes
+      operationId: cathodes-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Category
+        - Shipping region
+  /prices/cathodes/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodesFindSummaryPricesDTO'
+      tags:
+        - Cathodes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CathodesPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - cathodes:read
+            - prices:cathodes
+      operationId: cathodes-summary
+      summary: Summary
+  /prices/cathodes/index:
+    post:
+      tags:
+        - Cathodes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodeIndexDTO'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - cathodes:read
+      operationId: cathodes-index
+      summary: Index
+  # Lithium-Ion-Battery
+  /prices/lithium-ion-battery:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIonBatteryFindAllPricesDTO'
+        required: true
+      tags:
+        - Lithium ion Battery
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumIonBatteryPricesApiResponse'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - lithium-ion-battery:read
+            - prices:lithium-ion-batteries
+      operationId: lithium-ion-battery-list-prices
+      summary: List prices
+      description: |
+        List the prices with the possibility to filter the result by:
+        - Range of dates
+        - Category
+        - Mesh size
+        - Format
+        - Shipping region
+        - Price Type
+  /prices/lithium-ion-battery/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIonBatterySummaryDTO'
+        required: true
+      tags:
+        - Lithium ion Battery
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumIonBatteryPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - lithium-ion-battery:read
+            - prices:lithium-ion-batteries
+      operationId: lithium-ion-battery-summary
+      summary: Summary
+  /prices/lithium-ion-battery/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIonBatteryIndexDTO'
+        required: false
+      tags:
+        - Lithium ion Battery
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumIonBatteryIndexApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - lithium-ion-battery:read
+            - prices:lithium-ion-batteries
+      operationId: lithium-ion-battery-index
+      summary: Index
+  # Black Mass
+  /prices/black-mass:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlackMassFindAllPricesRequest'
+        required: true
+      tags:
+        - Black Mass
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlackMassPricesApiResponse'
+          description: Successful operation
+      operationId: black-mass-list-prices
+      description: List prices
+      security:
+        - api_key:
+            - black-mass:read
+            - prices:black-mass
+  /prices/black-mass/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlackMassFindSummaryPricesRequest'
+      tags:
+        - Black Mass
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlackMassPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - black-mass:read
+            - prices:black-mass
+      operationId: black-mass-summary
+      summary: Summary
+  /prices/black-mass/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlackMassIndexDTO'
+        required: false
+      tags:
+        - Black Mass
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - black-mass:read
+            - prices:black-mass
+      operationId: black-mass-index
+      summary: Index
+  # Rare Earths
+  /prices/rare-earths:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RareEarthsFindAllPricesRequest'
+        required: true
+      tags:
+        - Rare Earths
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RareEarthsPricesApiResponse'
+          description: Successful operation
+      operationId: rare-earths-list-prices
+      description: List prices
+      security:
+        - api_key:
+            - rare-earths:read
+            - prices:rare-earths
+  /prices/rare-earths/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RareEarthsFindSummaryPricesRequest'
+      tags:
+        - Rare Earths
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RareEarthsPricesSummaryApiResponse'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - rare-earths:read
+            - prices:rare-earths
+      operationId: rare-earths-summary
+      summary: Summary
+  /prices/rare-earths/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RareEarthsIndexDTO'
+        required: false
+      tags:
+        - Rare Earths
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - rare-earths:read
+            - prices:rare-earths
+      operationId: rare-earths-index
+      summary: Index
+  # Lithium-Ion-Battery Raw Material
+  /prices/lithium-ion-battery-raw-material/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIonBatteryRawMaterialIndexDTO'
+        required: false
+      tags:
+        - Lithium ion Battery Raw Material
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        "401":
+          description: unauthorized
+      security:
+        - api_key:
+            - lithium-ion-battery-raw-material:read
+      operationId: lithium-ion-battery-raw-material-index
+      summary: Index
+components:
+  schemas:
+    #   Common objects
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      nullable: true
+      type: array
+      items:
+        type: string
+      example:
+        - "t"
+        - "kwh"
+        - "%"
+    CurrencyRequest:
+      nullable: true
+      type: string
+      enum: [ USD, CNY, JPY, AUD, KRW, EUR ]
+      example: CNY
+    UnitRequest:
+      description: Drive on which data must be returned
+      nullable: true
+      type: string
+      enum: [ t, kg, lb ]
+      example: t
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
+        name:
+          type: string
+          example: Lithium Carbonate
+        alias:
+          nullable: true
+          type: string
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
+    Purity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Min 99.0%
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          nullable: true
+          type: string
+          example: CIF Asia (Combined)
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          nullable: true
+          type: string
+          example: t
+    Currency:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          nullable: true
+          type: number
+          example: 1000
+        valueHigh:
+          nullable: true
+          type: number
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    DataSummary:
+      type: object
+      properties:
+        today:
+          nullable: true
+          type: number
+          example: 1000
+        last:
+          nullable: true
+          type: number
+          example: 1100
+        latestChange:
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        dailyChange:
+          description: Daily percentage change of the current value compared to the value from the previous day.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        weeklyChange:
+          description: Weekly percentage change of the current value compared to the value from the previous week.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        biWeeklyChange:
+          description: Bi-weekly percentage change of the current value compared to the value from two weeks ago.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        monthlyChange:
+          description: Monthly percentage change of the current value compared to the value from the previous month.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        quarterlyMonthsChange:
+          description: Quarterly percentage change of the current value compared to the value from three months ago.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        sixMonthsChange:
+          description: Semi-annual percentage change of the current value compared to the value from six months ago.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          description: Year-on-year percentage change of the current value compared to the value from the same period last year.
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          nullable: true
+          type: number
+          example: 1000
+        last:
+          nullable: true
+          type: number
+          example: 1100
+        latestChange:
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          nullable: true
+          type: object
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    NickelCategories:
+      description: categories in the store
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: TEST
+          isSustainable:
+            nullable: true
+            type: boolean
+            example: false
+      example: [ { name: 'TEST', isSustainable: false } ]
+    NickelPurities:
+      description: purities in the store
+      type: array
+      items:
+        type: string
+      example:
+        - Aggregate MHP
+        - Min 35%
+        - Min 22%
+        - 100% Ni Contained
+    NickelRegions:
+      description: regions in the store
+      type: array
+      items:
+        type: string
+      example:
+        - NiSO4
+        - NiSO4 premium over global refined nickel
+        - Mixed Hydroxide Precipitate
+        - Normalisation Factors
+    BlackMassFeedstocks:
+      description: feedstocks in the store
+      type: array
+      items:
+        type: string
+      example:
+        - LFP
+        - LCO
+        - All Chemistries
+        - NCM
+    BlackMassProducts:
+      description: types in the store
+      type: array
+      items:
+        type: string
+      example:
+        - All Scrap
+        - Co
+        - CoSO4
+        - EOL
+        - LCE
+        - Li Price per Percentage Point
+        - Ni
+        - NiSO4
+        - Process Scrap
+    BlackMassRoutes:
+      description: routes in the store
+      type: array
+      items:
+        type: string
+      example:
+        - EXW North America
+        - EXW China
+        - CIF Asia
+    RareEarthsCategories:
+      description: categories in the store
+      type: array
+      items:
+        type: string
+      example:
+        - Praseodymium-Neodymium Oxide
+        - Dysprosium Oxide
+        - Terbium Oxide
+        - Samarium Oxide
+        - Li Price per Percentage Point
+        - China Weighted Index
+        - China Weighted Average
+    RareEarthsRoutes:
+      description: routes in the store
+      type: array
+      items:
+        type: string
+      example:
+        - DDP China
+    RareEarthsPurities:
+      description: purities in the store
+      type: array
+      items:
+        type: string
+      example:
+        - ">22%>70%"
+        - "99.0-99.5%"
+        - "99.0-99.9%"
+    Service:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Graphitisation
+    MeshSize:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 788353e5-3d01-4836-a333-9da2dc06244c
+        size:
+          type: string
+          example: +100 mesh
+    ProductMetadata:
+      type: object
+      properties:
+        product:
+          type: string
+          example: Lithium ion Battery Cell
+    Format:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Pouch
+    Capacity:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          example: e3f4a5b6-c7d8-4e9f-a0b1-c2d3e4f5a6b7
+        name:
+          type: string
+          example: 100-150 Ah
+    LithiumIonBatteryCellShippingRoute:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: EXW Asia
+        alias:
+          nullable: true
+          type: string
+    BlackMassProduct:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: EOL
+        alias:
+          nullable: true
+          type: string
+          example: End of Life
+
+    #   Request objects
+    SpotlightPricesDTO:
+      required:
+        - currency
+      type: object
+      properties:
+        currency:
+          type: string
+          example: USD
+    LithiumPricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        shippingRoutes:
+          description: Shipping routes by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - FOB S America
+            - FOB N America
+            - FOB Australia
+            - EXW China
+            - CIF N America
+            - CIF EU
+            - CIF Asia (spot)
+            - CIF Asia (contract)
+            - CIF Asia (combined)
+            - CIF Asia
+        categories:
+          description: Categories by which to filter
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Lithium Carbonate
+              isSustainable:
+                type: boolean
+                example: false
+            required:
+              - name
+        purities:
+          description: Purities by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - 6%
+            - Min 55.0%
+            - Min 56.5%
+            - Min 99.0%
+            - Min 99.2%
+            - Min 99.5%
+        priceTypes:
+          description: Price types by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Daily Price Indicator
+            - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    LithiumSummaryDTO:
+      type: object
+      properties:
+        shippingRoutes:
+          description: Shipping routes by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - FOB S America
+            - FOB N America
+            - FOB Australia
+            - EXW China
+            - CIF N America
+            - CIF EU
+            - CIF Asia (spot)
+            - CIF Asia (contract)
+            - CIF Asia (combined)
+            - CIF Asia
+        categories:
+          description: Categories by which to filter
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Lithium Carbonate
+              isSustainable:
+                type: boolean
+                example: false
+            required:
+              - name
+        purities:
+          description: Purities by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - 6%
+            - Min 55.0%
+            - Min 56.5%
+            - Min 99.0%
+            - Min 99.2%
+            - Min 99.5%
+        priceTypes:
+          description: Price types by which to filter
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Price Indicator
+            - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    LithiumIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Lithium Carbonate
+            - Lithium Hydroxide
+            - Lithium
+    CobaltPricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - CIF Asia
+            - EXW China
+            - EXW Europe
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - CoSO4
+            - Co3O4
+            - Co Metal
+            - Co(OH)2
+            - Mixed Hydroxide Precipitate
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Payable
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Min 1%
+            - Min 20%
+            - Min 20.5%
+            - Min 72.8%
+            - Min 99.8%
+            - Aggregate MHP
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CobaltSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - CIF Asia
+            - EXW China
+            - EXW Europe
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - CoSO4
+            - Co3O4
+            - Co Metal
+            - Co(OH)2
+            - Mixed Hydroxide Precipitate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Min 1%
+            - Min 20%
+            - Min 20.5%
+            - Min 72.8%
+            - Min 99.8%
+            - Aggregate MHP
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Payable
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CobaltRequestIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          nullable: true
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          nullable: true
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        indexes:
+          nullable: true
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Cobalt
+    NickelFindAllPricesRequest:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          $ref: '#/components/schemas/NickelCategories'
+        purities:
+          $ref: '#/components/schemas/NickelPurities'
+        shippingRoutes:
+          $ref: '#/components/schemas/NickelRegions'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Payable
+    NickelFindSummaryPricesRequest:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          $ref: '#/components/schemas/NickelCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/NickelRegions'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Payable
+    NickelIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Nickel
+    ManganesePricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Manganese Sulphate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 32%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    ManganeseSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Manganese Sulphate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 32%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    NaturalGraphitePricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Flake
+            - Spherical Uncoated
+        meshSizes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - +100 Mesh
+            - +50 Mesh
+            - +80 Mesh
+            - -100 Mesh
+            - 10 Microns
+            - 15 Microns
+            - 25 Microns
+        purites:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 90-93% C
+            - 94-95% C
+            - 99.95%
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+            - FOB China
+            - CIF N America
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    NaturalGraphiteSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Flake
+            - Spherical Uncoated
+        meshSizes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - +100 Mesh
+            - +50 Mesh
+            - +80 Mesh
+            - -100 Mesh
+            - 10 Microns
+            - 15 Microns
+            - 25 Microns
+        purites:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 90-93% C
+            - 94-95% C
+            - 99.95%
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+            - FOB China
+            - CIF N America
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    NaturalGraphiteIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Graphite
+    SyntheticGraphitePricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: Shipping routes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - coke
+            - Calcined Pet Coke
+            - Pre-calcined Pet Coke
+            - Calcined Pet Needle Coke
+            - Pre-calcined Pet Needle Coke
+            - Calcined Pitch Needle Coke
+            - Pre-calcined Pitch Needle Coke
+            - Medium Sulphur Pre-calcined Pet Coke
+            - External Tolling Fees
+        purities:
+          description: purities
+          type: array
+          items:
+            type: string
+          example:
+            - S<0.5%
+            - 0.5%<S<3.0%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    SyntheticGraphiteSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: shipping routes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - coke
+            - Calcined Pet Coke
+            - Pre-calcined Pet Coke
+            - Calcined Pet Needle Coke
+            - Pre-calcined Pet Needle Coke
+            - Calcined Pitch Needle Coke
+            - Pre-calcined Pitch Needle Coke
+            - Medium Sulphur Pre-calcined Pet Coke
+            - External Tolling Fees
+        purities:
+          description: purities in the store
+          type: array
+          items:
+            type: string
+          example:
+            - S<0.5%
+            - 0.5%<S<3.0%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    SyntheticGraphiteIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Anode Coke
+    AnodePricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Natural Graphite Anode
+            - Synthetic Graphite Anode
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - "Low (345-360 mAh/g), min 99.90% C"
+            - "Medium (360-370 mAh/g), min 99.95% C"
+            - "High (360-370 mAh/g), min 99.97% C"
+            - "Low (310-330 mAh/g), min 99.70% C"
+            - "Medium (330-350 mAh/g), min 99.95% C"
+            - "High (350-370 mAh/g), min 99.97% C"
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    AnodeSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: shipping routes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Natural Graphite Anode
+            - Synthetic Graphite Anode
+        purities:
+          description: purities in the store
+          type: array
+          items:
+            type: string
+          example:
+            - "Low (345-360 mAh/g), min 99.90% C%"
+            - "Medium (360-370 mAh/g), min 99.95% C"
+            - "High (360-370 mAh/g), min 99.97% C"
+            - "Low (310-330 mAh/g), min 99.70% C"
+            - "Medium (330-350 mAh/g), min 99.95% C"
+            - "High (350-370 mAh/g), min 99.97% C"
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    AnodeIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Anode
+            - ESS
+            - EV
+            - Portable
+    CathodesFindAllPricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - "NCM111, 140-160 mAh/g"
+            - "NCM523, 150-170 mAh/g"
+            - "NCM622, 155-180 mAh/g"
+            - "NCM811, ≥200 mAh/g"
+            - "NCA, ≥175 mAh/g"
+            - "LFP, ≥160 mAh/g"
+            - "LCO, ≥155 mAh/g"
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CathodesFindSummaryPricesDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - "NCM111, 140-160 mAh/g"
+            - "NCM523, 150-170 mAh/g"
+            - "NCM622, 155-180 mAh/g"
+            - "NCM811, ≥200 mAh/g"
+            - "NCA, ≥175 mAh/g"
+            - "LFP, ≥160 mAh/g"
+            - "LCO, ≥155 mAh/g"
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+            - DDP China
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CathodeIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Cathode
+            - ESS
+            - EV
+            - Portable
+    LithiumIonBatteryFindAllPricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - NCM
+            - Lithium ion Battery
+            - EV
+            - NCM111
+            - NCM523
+            - NCM622
+            - NCM811
+            - NCA
+            - LFP
+            - LCO
+        formats:
+          description: formats in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Cylindrical
+            - Prismatic
+            - Pouch
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+            - EXW North America
+            - EXW Europe
+            - EXW Asia
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    LithiumIonBatterySummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - NCM
+            - Lithium ion Battery
+            - EV
+            - NCM111
+            - NCM523
+            - NCM622
+            - NCM811
+            - NCA
+            - LFP
+            - LCO
+        formats:
+          description: purities in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Cylindrical
+            - Prismatic
+            - Pouch
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+            - EXW North America
+            - EXW Europe
+            - EXW Asia
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    LithiumIonBatteryIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Battery Cell
+    BlackMassFindAllPricesRequest:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        feedstocks:
+          $ref: '#/components/schemas/BlackMassFeedstocks'
+        products:
+          $ref: '#/components/schemas/BlackMassProducts'
+        shippingRoutes:
+          $ref: '#/components/schemas/BlackMassRoutes'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Payable
+            - Weighted Average Price
+            - Fixed Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    BlackMassFindSummaryPricesRequest:
+      type: object
+      properties:
+        feedstocks:
+          $ref: '#/components/schemas/BlackMassFeedstocks'
+        products:
+          $ref: '#/components/schemas/BlackMassProducts'
+        shippingRoutes:
+          $ref: '#/components/schemas/BlackMassRoutes'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Payable
+            - Weighted Average Price
+            - Fixed Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    BlackMassIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          nullable: true
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Black Mass
+    RareEarthsFindAllPricesRequest:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        categories:
+          $ref: '#/components/schemas/RareEarthsCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/RareEarthsRoutes'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        purities:
+          $ref: '#/components/schemas/RareEarthsPurities'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Weighted Average Price
+    RareEarthsFindSummaryPricesRequest:
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/RareEarthsCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/RareEarthsRoutes'
+        purities:
+          $ref: '#/components/schemas/RareEarthsPurities'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+            - Weighted Average Price
+    RareEarthsIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          nullable: true
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - Rare Earths
+    LithiumIonBatteryRawMaterialIndexDTO:
+      nullable: true
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+            - LFP
+    ElectrolytePricesDTO:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - LiPF6
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 99.55%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    ElectrolyteSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - LiPF6
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+            - 99.55%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+            - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+
+    #   Response objects
+    SpotlightPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+              enum:
+                - USD
+                - RMB
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+                  name:
+                    type: string
+                    example: Benchmark Lithium Carbonate China Index
+                  note:
+                    nullable: true
+                    type: string
+                    example: cobalt contained
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              data:
+                type: object
+                properties:
+                  latestDate:
+                    format: yyyy-MM-dd
+                    type: string
+                    example: 2023-01-31
+                  latestValue:
+                    type: number
+                    example: 435.21
+                  latestChange:
+                    nullable: true
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        description: "Percentage change of the current value."
+                        example: 32.5
+                      unit:
+                        type: string
+                        description: "Unit of measurement for the trend value."
+                        example: "%"
+    LithiumPricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              grade:
+                nullable: true
+                type: string
+                example: Battery
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+            required:
+              - name
+              - category
+              - purity
+              - unitOfMeasure
+              - priceType
+              - currency
+              - series
+    LithiumPricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Lithium Carbonate
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: 2wk
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    grade:
+                      nullable: true
+                      type: string
+                      example: Battery
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    IndexApiResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  updateFrequency:
+                    type: string
+                    example: 2wk
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    CobaltPricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    CobaltPricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Cobalt Metal
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: Co Metal
+              frequency:
+                type: string
+                example: 2wk
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    IndexApiResponseV2:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: test
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    NickelPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Nickel
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    NickelPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Nickel
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRegion:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    NickelIndexApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Nickel
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: nickel
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: nickel
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    ManganesePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    ManganesePricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 756fcf48-22db-4bed-90f5-510a871956e1
+              name:
+                type: string
+                example: Manganese Sulphate
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: MnSO4
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    NaturalGraphitePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              meshSize:
+                $ref: '#/components/schemas/MeshSize'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    NaturalGraphitePricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Lithium Carbonate
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: 2wk
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    meshSize:
+                      $ref: '#/components/schemas/MeshSize'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    SyntheticGraphitePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              service:
+                $ref: '#/components/schemas/Service'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    SyntheticPricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Calcined Pet Needle Coke
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: ""
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    service:
+                      $ref: '#/components/schemas/Service'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    SyntheticGraphiteIndexApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Synthetic Graphite
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: synthetic_graphite
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: synthetic_graphite
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    AnodePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    AnodePricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Natural Graphite Anode
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: ""
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    CathodesPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Cathode
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    CathodesPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Cathode
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRegion:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    LithiumIonBatteryPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          $ref: '#/components/schemas/ProductMetadata'
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              format:
+                $ref: '#/components/schemas/Format'
+              capacity:
+                $ref: '#/components/schemas/Capacity'
+              shippingRoute:
+                $ref: '#/components/schemas/LithiumIonBatteryCellShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    LithiumIonBatteryPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          $ref: '#/components/schemas/ProductMetadata'
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: LCO
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: null
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/LithiumIonBatteryCellShippingRoute'
+                    format:
+                      $ref: '#/components/schemas/Format'
+                    capacity:
+                      $ref: '#/components/schemas/Capacity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    LithiumIonBatteryIndexApiResponse:
+      type: object
+      properties:
+        $metadata:
+          $ref: '#/components/schemas/ProductMetadata'
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Battery Cell
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Battery Cell
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    BlackMassPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Black Mass
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              feedstock:
+                $ref: '#/components/schemas/Category'
+              product:
+                $ref: '#/components/schemas/BlackMassProduct'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    BlackMassPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Black Mass
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    product:
+                      $ref: '#/components/schemas/BlackMassProduct'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    RareEarthsPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Rare Earths
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    RareEarthsPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Rare Earths
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    ElectrolytePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    ElectrolytePricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 756fcf48-22db-4bed-90f5-510a871956e1
+              name:
+                type: string
+                example: Electrolyte
+              alias:
+                nullable: true
+                type: string
+                example: null
+              chemicalCode:
+                nullable: true
+                type: string
+                example: LiPF6
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+
+    #   Error objects
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

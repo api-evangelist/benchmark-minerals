@@ -25,7 +25,7 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 created: '2025-03-01'
-modified: '2026-04-19'
+modified: '2026-09-04'
 type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/benchmark-minerals.png
 access: 3rd-Party
@@ -88,24 +88,80 @@ apis:
       and critical minerals supply chain. API keys are available to enterprise
       subscribers, enabling integration of benchmark prices, forecasts, and
       supply chain databases into business intelligence and procurement systems.
+    baseURL: https://api.benchmarkminerals.com/v2
     properties:
       - type: Documentation
         url: https://www.benchmarkminerals.com/api
       - type: APIReference
         url: https://www.benchmarkminerals.com/api/docs
+      - type: OpenAPI
+        url: openapi/benchmark-minerals-prices-api.yml
+      - type: Overlay
+        url: overlays/benchmark-minerals-prices-api-overlay.yaml
+      - type: ToolCrosswalk
+        url: mcp/benchmark-minerals-tool-crosswalk.yml
 common:
+  - type: Authentication
+    url: authentication/benchmark-minerals-authentication.yml
   - type: DomainSecurity
     url: security/benchmark-minerals-domain-security.yml
+  - type: OAuthScopes
+    url: scopes/benchmark-minerals-scopes.yml
+  - type: Conventions
+    url: conventions/benchmark-minerals-conventions.yml
+  - type: ErrorCatalog
+    url: errors/benchmark-minerals-problem-types.yml
+  - type: DataModel
+    url: data-model/benchmark-minerals-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/benchmark-minerals-lifecycle.yml
+  - type: Conformance
+    url: conformance/benchmark-minerals-conformance.yml
+  - type: Compliance
+    url: conformance/benchmark-minerals-conformance.yml
+    title: IOSCO-assured price assessments
+  - type: WellKnown
+    url: well-known/benchmark-minerals-well-known.yml
+  - type: MCPServer
+    url: mcp/benchmark-minerals-mcp.yml
+    title: Benchmark MCP Gateway (https://mcp.benchmarkminerals.com/mcp)
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/benchmark-minerals-llms.txt
+  - type: Packages
+    url: packages/benchmark-minerals-packages.yml
+  - type: Components
+    url: components/benchmark-minerals-components.yml
+  - type: Sandbox
+    url: sandbox/benchmark-minerals-sandbox.yml
+  - type: Plans
+    url: plans/benchmark-minerals-plans-pricing.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: Support
+    url: https://www.benchmarkminerals.com/contact/a-technical-issue
+  - type: TermsOfService
+    url: https://www.benchmarkminerals.com/terms
+  - type: PrivacyPolicy
+    url: https://www.benchmarkminerals.com/privacy
+  - type: GitHubOrganization
+    url: https://github.com/benchmarkminerals
   - type: LinkedIn
     url: https://www.linkedin.com/company/benchmark-mineral-intelligence
   - type: Website
     url: https://www.benchmarkminerals.com
-  - type: Portal
+  - type: DeveloperPortal
+    url: https://www.benchmarkminerals.com/api
+    title: Benchmark API
+  - type: Blog
     url: https://source.benchmarkminerals.com
-    title: Benchmark Source Data Platform
+    title: Benchmark Source
   - type: Pricing
-    url: https://www.benchmarkminerals.com/all-prices-subscription
-    title: Price Data Subscriptions
+    url: https://www.benchmarkminerals.com/plans
+    title: Subscription Plans
   - type: Features
     data:
       - name: Price Assessments
@@ -175,3 +231,8 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v3

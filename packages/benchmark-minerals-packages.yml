@@ -1,0 +1,47 @@
+generated: '2026-09-04'
+method: searched
+source: npm registry search, PyPI, GitHub org api.github.com/orgs/benchmarkminerals, Microsoft AppSource,
+  https://www.benchmarkminerals.com/api
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+package_count: 1
+sdk_count: 0
+note: 'Benchmark publishes NO client SDK in any language. Searched npm (registry search for "benchmarkminerals":
+  0 results), PyPI, and the company GitHub org github.com/benchmarkminerals — which exists (created 2023-05-10)
+  but has 0 public repositories. The only first-party distributed client is an Excel add-in on Microsoft
+  AppSource, which is an end-user tool rather than a code library, so no SDKs pointer is emitted. An integrator
+  calls the REST API with a plain HTTP client.'
+packages:
+- name: Benchmark Excel Add-In
+  official: true
+  kind: office-add-in
+  language: null
+  registry: microsoft-appsource
+  registry_id: wa200007134
+  url: https://appsource.microsoft.com/en-us/product/office/wa200007134?tab=overview
+  docs: https://www.benchmarkminerals.com/excel-add-in
+  version: null
+  published: null
+  note: AppSource does not expose a public metadata endpoint for add-in version or publish date, and neither
+    the AppSource listing nor the Benchmark product page states a version number — so version and published
+    are recorded null after checking, not omitted as unchecked. Install is "Download the Excel Add-In
+    from the Microsoft Store", then sign in with existing Benchmark credentials.
+  probe:
+    url: https://appsource.microsoft.com/en-us/product/office/wa200007134?tab=overview
+    status: 200
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=benchmarkminerals
+  result: 0 packages
+- registry: pypi
+  query: https://pypi.org/pypi/benchmark-minerals/json
+  result: 404 Not Found
+- registry: github
+  query: https://api.github.com/orgs/benchmarkminerals/repos
+  result: 0 public repos
+- registry: github-search
+  query: https://api.github.com/search/repositories?q=benchmarkminerals
+  result: 0 repositories
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,226 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/benchmark-minerals-prices-api.yml + probe of https://mcp.benchmarkminerals.com/mcp
+provider: Benchmark Minerals
+providerId: benchmark-minerals
+note: 'Benchmark runs both a REST contract and a live MCP gateway, so the crosswalk is emitted — but the
+  MCP side cannot be bound yet. tools/list on https://mcp.benchmarkminerals.com/mcp requires a Cognito
+  bearer token and returns -32001 Missing Bearer token anonymously, and the server is undocumented, so
+  there is no published tool list to map by name either. NOTHING is guessed: crosswalk[] is empty by evidence,
+  not by oversight, and every REST operation is recorded in rest_only[] pending authenticated introspection.'
+surfaces:
+  openapi:
+    url: https://www.benchmarkminerals.com/prices-api.yml
+    base: https://api.benchmarkminerals.com/v2
+    gated: false
+    operations: 36
+    auth: x-api-key header
+  mcp:
+    url: https://mcp.benchmarkminerals.com/mcp
+    gated: true
+    auth: oauth2 bearer
+    scopes:
+    - benchmark-tools/sandbox.read
+    - benchmark-tools/production.read
+    tools: null
+    gate_evidence: POST tools/list -> HTTP 401 {"jsonrpc":"2.0","id":0,"error":{"code":-32001,"message":"Missing
+      Bearer token"}}
+  graphql:
+    present: false
+crosswalk: []
+mcp_only: []
+rest_only:
+- operationId: spotlight-list-prices
+  method: POST
+  path: /prices/spotlight
+  market: Spotlight
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-list-prices
+  method: POST
+  path: /prices/lithium
+  market: Lithium
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-summary
+  method: POST
+  path: /prices/lithium/summary
+  market: Lithium
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-index
+  method: POST
+  path: /prices/lithium/index
+  market: Lithium
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cobalt-list-prices
+  method: POST
+  path: /prices/cobalt
+  market: Cobalt
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cobalt-summary
+  method: POST
+  path: /prices/cobalt/summary
+  market: Cobalt
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cobalt-index
+  method: POST
+  path: /prices/cobalt/index
+  market: Cobalt
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: nickel-list-prices
+  method: POST
+  path: /prices/nickel
+  market: Nickel
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: nickel-summary
+  method: POST
+  path: /prices/nickel/summary
+  market: Nickel
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: nickel-index
+  method: POST
+  path: /prices/nickel/index
+  market: Nickel
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: manganese-list-prices
+  method: POST
+  path: /prices/manganese
+  market: Manganese
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: manganese-summary
+  method: POST
+  path: /prices/manganese/summary
+  market: Manganese
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: natural-graphite-list-prices
+  method: POST
+  path: /prices/natural-graphite
+  market: Natural Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: natural-graphite-summary
+  method: POST
+  path: /prices/natural-graphite/summary
+  market: Natural Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: natural-graphite-index
+  method: POST
+  path: /prices/natural-graphite/index
+  market: Natural Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: synthetic-graphite-list-prices
+  method: POST
+  path: /prices/synthetic-graphite
+  market: Synthetic-Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: synthetic-graphite-summary
+  method: POST
+  path: /prices/synthetic-graphite/summary
+  market: Synthetic-Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: synthetic-graphite-index
+  method: POST
+  path: /prices/synthetic-graphite/index
+  market: Synthetic-Graphite
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: electrolyte-list-prices
+  method: POST
+  path: /prices/electrolyte
+  market: Electrolyte
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: electrolyte-summary
+  method: POST
+  path: /prices/electrolyte/summary
+  market: Electrolyte
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: anode-list-prices
+  method: POST
+  path: /prices/anodes
+  market: Anodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: anode-summary
+  method: POST
+  path: /prices/anodes/summary
+  market: Anodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: anode-index
+  method: POST
+  path: /prices/anodes/index
+  market: Anodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cathodes-list-prices
+  method: POST
+  path: /prices/cathodes
+  market: Cathodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cathodes-summary
+  method: POST
+  path: /prices/cathodes/summary
+  market: Cathodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: cathodes-index
+  method: POST
+  path: /prices/cathodes/index
+  market: Cathodes
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-ion-battery-list-prices
+  method: POST
+  path: /prices/lithium-ion-battery
+  market: Lithium ion Battery
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-ion-battery-summary
+  method: POST
+  path: /prices/lithium-ion-battery/summary
+  market: Lithium ion Battery
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-ion-battery-index
+  method: POST
+  path: /prices/lithium-ion-battery/index
+  market: Lithium ion Battery
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: black-mass-list-prices
+  method: POST
+  path: /prices/black-mass
+  market: Black Mass
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: black-mass-summary
+  method: POST
+  path: /prices/black-mass/summary
+  market: Black Mass
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: black-mass-index
+  method: POST
+  path: /prices/black-mass/index
+  market: Black Mass
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: rare-earths-list-prices
+  method: POST
+  path: /prices/rare-earths
+  market: Rare Earths
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: rare-earths-summary
+  method: POST
+  path: /prices/rare-earths/summary
+  market: Rare Earths
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: rare-earths-index
+  method: POST
+  path: /prices/rare-earths/index
+  market: Rare Earths
+  reason: MCP tool list is auth-gated; no binding can be asserted
+- operationId: lithium-ion-battery-raw-material-index
+  method: POST
+  path: /prices/lithium-ion-battery-raw-material/index
+  market: Lithium ion Battery Raw Material
+  reason: MCP tool list is auth-gated; no binding can be asserted
+coverage:
+  rest_operations: 36
+  mcp_tools: null
+  bound: 0
+  rest_only: 36
+  mcp_only: null
+  bound_pct: 0.0
+  note: Re-run this crosswalk with an authenticated tools/list to bind the two surfaces.
+next_step: Obtain an MCP client credential from Benchmark (scope benchmark-tools/production.read), POST
+  tools/list, and bind each returned tool to the operationIds above by market and by the list/summary/index
+  shape.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
