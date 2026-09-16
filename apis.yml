@@ -72,35 +72,237 @@ tags_raw:
   - Rare Earths
   - Supply Chain
 apis:
-  - aid: benchmark-minerals:benchmark-minerals-api
-    name: Benchmark Minerals API
-    tags:
-      - Batteries
-      - Critical Minerals
-      - Market Intelligence
-      - Mining
-      - Price Data
-      - Supply Chain
-    humanURL: https://www.benchmarkminerals.com/api
-    description: >-
-      The Benchmark Minerals API provides programmatic access to price data,
-      supply chain data, and market intelligence for the lithium-ion battery
-      and critical minerals supply chain. API keys are available to enterprise
-      subscribers, enabling integration of benchmark prices, forecasts, and
-      supply chain databases into business intelligence and procurement systems.
-    baseURL: https://api.benchmarkminerals.com/v2
-    properties:
-      - type: Documentation
-        url: https://www.benchmarkminerals.com/api
-      - type: APIReference
-        url: https://www.benchmarkminerals.com/api/docs
-      - type: OpenAPI
-        url: openapi/benchmark-minerals-prices-api.yml
-      - type: Overlay
-        url: overlays/benchmark-minerals-prices-api-overlay.yaml
-      - type: ToolCrosswalk
-        url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-anodes-api
+  name: Benchmark Minerals Anodes API
+  description: The Anodes API from Benchmark Minerals — 3 operation(s) for anodes.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Anodes
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-anodes-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-black-mass-api
+  name: Benchmark Minerals Black Mass API
+  description: The Black Mass API from Benchmark Minerals — 3 operation(s) for black mass.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Black Mass
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-black-mass-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-cathodes-api
+  name: Benchmark Minerals Cathodes API
+  description: The Cathodes API from Benchmark Minerals — 3 operation(s) for cathodes.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Cathodes
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-cathodes-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-cobalt-api
+  name: Benchmark Minerals Cobalt API
+  description: The Cobalt API from Benchmark Minerals — 3 operation(s) for cobalt.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Cobalt
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-cobalt-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-electrolyte-api
+  name: Benchmark Minerals Electrolyte API
+  description: The Electrolyte API from Benchmark Minerals — 2 operation(s) for electrolyte.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Electrolyte
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-electrolyte-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-lithium-api
+  name: Benchmark Minerals Lithium API
+  description: The Lithium API from Benchmark Minerals — 3 operation(s) for lithium.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Lithium
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-lithium-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-lithium-ion-battery-api
+  name: Benchmark Minerals Lithium ion Battery API
+  description: >-
+    The Lithium ion Battery API from Benchmark Minerals — 3 operation(s) for lithium ion battery.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Lithium ion Battery
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-lithium-ion-battery-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-lithium-ion-battery-raw-material-api
+  name: Benchmark Minerals Lithium ion Battery Raw Material API
+  description: >-
+    The Lithium ion Battery Raw Material API from Benchmark Minerals — 1 operation(s) for lithium ion
+    battery raw material.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Lithium ion Battery Raw Material
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-lithium-ion-battery-raw-material-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-manganese-api
+  name: Benchmark Minerals Manganese API
+  description: The Manganese API from Benchmark Minerals — 2 operation(s) for manganese.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Manganese
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-manganese-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-natural-graphite-api
+  name: Benchmark Minerals Natural Graphite API
+  description: The Natural Graphite API from Benchmark Minerals — 3 operation(s) for natural graphite.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Natural Graphite
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-natural-graphite-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-nickel-api
+  name: Benchmark Minerals Nickel API
+  description: The Nickel API from Benchmark Minerals — 3 operation(s) for nickel.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Nickel
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-nickel-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-rare-earths-api
+  name: Benchmark Minerals Rare Earths API
+  description: The Rare Earths API from Benchmark Minerals — 3 operation(s) for rare earths.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Rare Earths
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-rare-earths-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-spotlight-api
+  name: Benchmark Minerals Spotlight API
+  description: The Spotlight API from Benchmark Minerals — 1 operation(s) for spotlight.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Spotlight
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-spotlight-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
+- aid: benchmark-minerals:benchmark-minerals-synthetic-graphite-api
+  name: Benchmark Minerals Synthetic Graphite API
+  description: >-
+    The Synthetic-Graphite API from Benchmark Minerals — 3 operation(s) for synthetic-graphite.
+  humanURL: https://www.benchmarkminerals.com/api
+  baseURL: https://api.benchmarkminerals.com/v2
+  tags:
+  - Synthetic-Graphite
+  properties:
+  - type: OpenAPI
+    url: openapi/benchmark-minerals-synthetic-graphite-api-openapi.yml
+  - type: Documentation
+    url: https://www.benchmarkminerals.com/api
+  - type: APIReference
+    url: https://www.benchmarkminerals.com/api/docs
+  - type: ToolCrosswalk
+    url: mcp/benchmark-minerals-tool-crosswalk.yml
 common:
+  - type: Overlay
+    url: overlays/benchmark-minerals-prices-api-overlay.yaml
   - type: Authentication
     url: authentication/benchmark-minerals-authentication.yml
   - type: DomainSecurity
