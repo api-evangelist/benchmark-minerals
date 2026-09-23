@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Benchmark Mineral Intelligence Lithium ion Battery Raw…
+  version: '2.0'
+  description: The Benchmark API provides access to a comprehensive range of pricing data for various markets to empower your most critical energy transition decisions.
+servers:
+- url: http://localhost:3013/v2
+- url: https://{environment}.benchmarkminerals.com/{version}
+  variables:
+    environment:
+      enum:
+      - api
+      - dev-api
+      - qa-api
+      default: api
+    version:
+      enum:
+      - v2
+      default: v2
+tags:
+- name: Lithium ion Battery Raw Material
+paths:
+  /prices/lithium-ion-battery-raw-material/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIonBatteryRawMaterialIndexDTO'
+        required: false
+      tags:
+      - Lithium ion Battery Raw Material
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponseV2'
+          description: Successful operation
+        '401':
+          description: unauthorized
+      security:
+      - api_key:
+        - lithium-ion-battery-raw-material:read
+      operationId: lithium-ion-battery-raw-material-index
+      summary: Index
+components:
+  schemas:
+    IndexApiResponseV2:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: test
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    LithiumIonBatteryRawMaterialIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+          - LFP
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

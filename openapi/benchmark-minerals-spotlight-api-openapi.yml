@@ -1,0 +1,157 @@
+openapi: 3.2.0
+info:
+  title: Benchmark Mineral Intelligence Spotlight API
+  version: '2.0'
+  description: The Benchmark API provides access to a comprehensive range of pricing data for various markets to empower your most critical energy transition decisions.
+servers:
+- url: http://localhost:3013/v2
+- url: https://{environment}.benchmarkminerals.com/{version}
+  variables:
+    environment:
+      enum:
+      - api
+      - dev-api
+      - qa-api
+      default: api
+    version:
+      enum:
+      - v2
+      default: v2
+tags:
+- name: Spotlight
+paths:
+  /prices/spotlight:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotlightPricesDTO'
+        required: true
+      tags:
+      - Spotlight
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotlightPricesApiResponse'
+          description: Successful operation
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Client does not have permission to access this resource
+      security:
+      - api_key:
+        - spotlight:read
+      operationId: spotlight-list-prices
+      summary: List spotlight prices
+      description: List the spotlight prices
+components:
+  schemas:
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    SpotlightPricesDTO:
+      required:
+      - currency
+      type: object
+      properties:
+        currency:
+          type: string
+          example: USD
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
+    SpotlightPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+              enum:
+              - USD
+              - RMB
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+                  name:
+                    type: string
+                    example: Benchmark Lithium Carbonate China Index
+                  note:
+                    type:
+                    - string
+                    - 'null'
+                    example: cobalt contained
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              data:
+                type: object
+                properties:
+                  latestDate:
+                    format: yyyy-MM-dd
+                    type: string
+                    example: 2023-01-31
+                  latestValue:
+                    type: number
+                    example: 435.21
+                  latestChange:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      value:
+                        type: number
+                        description: Percentage change of the current value.
+                        example: 32.5
+                      unit:
+                        type: string
+                        description: Unit of measurement for the trend value.
+                        example: '%'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

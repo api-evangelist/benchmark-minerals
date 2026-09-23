@@ -1,4 +1,4 @@
-generated: '2026-09-04'
+generated: '2026-09-19'
 method: probed
 source: live HTTP probes of every host in the record, 2026-09-04
 provider: Benchmark Minerals
@@ -7,18 +7,24 @@ note: 'Only one host in the estate serves a real well-known document: the MCP ga
   publishes an RFC 9728 OAuth protected-resource descriptor, which is what points at the Cognito issuer.
   The marketing/docs hosts (www, apex, source) return the site 404 shell for every path, and the REST
   API host api.benchmarkminerals.com answers 403 Forbidden to everything unauthenticated, including /.well-known/*,
-  so absence there is unproven rather than confirmed.'
+  so absence there is unproven rather than confirmed.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
 - host: mcp.benchmarkminerals.com
   role: MCP gateway
   documents:
   - path: /.well-known/oauth-protected-resource
     status: 200
-    file: well-known/benchmark-minerals-mcp-oauth-protected-resource.json
+    file: benchmark-minerals-mcp-oauth-protected-resource.json
     note: RFC 9728 protected-resource metadata; names the Cognito authorization server and two scopes.
   - path: /.well-known/oauth-protected-resource/mcp
     status: 200
-    file: well-known/benchmark-minerals-mcp-oauth-protected-resource.json
+    file: benchmark-minerals-mcp-oauth-protected-resource.json
     note: Identical body to the bare path.
   - path: /.well-known/oauth-authorization-server
     status: 400
@@ -42,12 +48,17 @@ hosts:
   documents:
   - path: /eu-west-2_GuiZRnNNK/.well-known/openid-configuration
     status: 200
-    file: well-known/benchmark-minerals-cognito-openid-configuration.json
+    file: benchmark-minerals-cognito-openid-configuration.json
     note: OIDC discovery for the Benchmark MCP user pool; its endpoints are branded on mcp-auth.benchmarkminerals.com.
   - path: /eu-west-2_GuiZRnNNK/.well-known/jwks.json
     status: 200
     file: null
     note: Two RS256 signing keys; not saved (rotating key material).
+  - path: /eu-west-2_GuiZRnNNK/.well-known/openid-configuration
+    status: 200
+    file: benchmark-minerals-cognito-idp-openid-configuration.json
+    bytes: 923
+  path_echo_control: passed
 - host: www.benchmarkminerals.com
   role: marketing + API docs
   documents:
@@ -202,3 +213,12 @@ summary:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://cognito-idp.eu-west-2.amazonaws.com
+    path: /eu-west-2_GuiZRnNNK/.well-known/openid-configuration
+    file: benchmark-minerals-cognito-idp-openid-configuration.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host

@@ -1,0 +1,662 @@
+openapi: 3.2.0
+info:
+  title: Benchmark Mineral Intelligence Cathodes API
+  version: '2.0'
+  description: The Benchmark API provides access to a comprehensive range of pricing data for various markets to empower your most critical energy transition decisions.
+servers:
+- url: http://localhost:3013/v2
+- url: https://{environment}.benchmarkminerals.com/{version}
+  variables:
+    environment:
+      enum:
+      - api
+      - dev-api
+      - qa-api
+      default: api
+    version:
+      enum:
+      - v2
+      default: v2
+tags:
+- name: Cathodes
+paths:
+  /prices/cathodes:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodesFindAllPricesDTO'
+        required: true
+      tags:
+      - Cathodes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CathodesPricesApiResponse'
+          description: Successful operation
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        '401':
+          description: unauthorized
+      security:
+      - api_key:
+        - cathodes:read
+        - prices:cathodes
+      operationId: cathodes-list-prices
+      summary: List prices
+      description: 'List the prices with the possibility to filter the result by:
+
+        - Range of dates
+
+        - Category
+
+        - Shipping region'
+  /prices/cathodes/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodesFindSummaryPricesDTO'
+      tags:
+      - Cathodes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CathodesPricesSummaryApiResponse'
+          description: Successful operation
+        '401':
+          description: unauthorized
+      security:
+      - api_key:
+        - cathodes:read
+        - prices:cathodes
+      operationId: cathodes-summary
+      summary: Summary
+  /prices/cathodes/index:
+    post:
+      tags:
+      - Cathodes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CathodeIndexDTO'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponse'
+          description: Successful operation
+        '401':
+          description: unauthorized
+      security:
+      - api_key:
+        - cathodes:read
+      operationId: cathodes-index
+      summary: Index
+components:
+  schemas:
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
+        name:
+          type: string
+          example: Lithium Carbonate
+        alias:
+          type:
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
+    CathodesFindSummaryPricesDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - NCM111, 140-160 mAh/g
+          - NCM523, 150-170 mAh/g
+          - NCM622, 155-180 mAh/g
+          - NCM811, ≥200 mAh/g
+          - NCA, ≥175 mAh/g
+          - LFP, ≥160 mAh/g
+          - LCO, ≥155 mAh/g
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+          - DDP China
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    IndexApiResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  updateFrequency:
+                    type: string
+                    example: 2wk
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    CathodesPricesApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Cathode
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    CathodesFindAllPricesDTO:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - NCM111, 140-160 mAh/g
+          - NCM523, 150-170 mAh/g
+          - NCM622, 155-180 mAh/g
+          - NCM811, ≥200 mAh/g
+          - NCA, ≥175 mAh/g
+          - LFP, ≥160 mAh/g
+          - LCO, ≥155 mAh/g
+        shippingRoutes:
+          description: regions in the store
+          type: array
+          items:
+            type: string
+          example:
+          - DDP China
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    DataSummary:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        dailyChange:
+          description: Daily percentage change of the current value compared to the value from the previous day.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        weeklyChange:
+          description: Weekly percentage change of the current value compared to the value from the previous week.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        biWeeklyChange:
+          description: Bi-weekly percentage change of the current value compared to the value from two weeks ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        monthlyChange:
+          description: Monthly percentage change of the current value compared to the value from the previous month.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        quarterlyMonthsChange:
+          description: Quarterly percentage change of the current value compared to the value from three months ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        sixMonthsChange:
+          description: Semi-annual percentage change of the current value compared to the value from six months ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          description: Year-on-year percentage change of the current value compared to the value from the same period last year.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    CathodesPricesSummaryApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Cathode
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                type:
+                - string
+                - 'null'
+                example: null
+              chemicalCode:
+                type:
+                - string
+                - 'null'
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRegion:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
+    CathodeIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Cathode
+          - ESS
+          - EV
+          - Portable
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

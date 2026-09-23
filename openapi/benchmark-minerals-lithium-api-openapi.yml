@@ -1,0 +1,750 @@
+openapi: 3.2.0
+info:
+  title: Benchmark Mineral Intelligence Lithium API
+  version: '2.0'
+  description: The Benchmark API provides access to a comprehensive range of pricing data for various markets to empower your most critical energy transition decisions.
+servers:
+- url: http://localhost:3013/v2
+- url: https://{environment}.benchmarkminerals.com/{version}
+  variables:
+    environment:
+      enum:
+      - api
+      - dev-api
+      - qa-api
+      default: api
+    version:
+      enum:
+      - v2
+      default: v2
+tags:
+- name: Lithium
+paths:
+  /prices/lithium:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumPricesDTO'
+        required: true
+      tags:
+      - Lithium
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumPricesApiResponse'
+          description: Successful operation
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationRequestError'
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Client does not have permission to access this resource
+      security:
+      - api_key:
+        - lithium:read
+        - prices:lithium
+      operationId: lithium-list-prices
+      summary: List prices
+      description: 'List the prices with the possibility to filter the result by:
+
+        - Range of dates
+
+        - Shipping route
+
+        - Category
+
+        - Purity
+
+        - Price Type'
+  /prices/lithium/summary:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumSummaryDTO'
+        required: false
+      tags:
+      - Lithium
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LithiumPricesSummaryApiResponse'
+          description: Successful operation
+        '401':
+          description: unauthorized
+        '403':
+          description: Client does not have permission to access this resource
+      security:
+      - api_key:
+        - lithium:read
+        - prices:lithium
+      operationId: lithium-summary
+      summary: Summary
+      description: 'List the summary with the possibility to filter the result by:
+
+        - Shipping region
+
+        - Category
+
+        - Purity
+
+        - Price Type'
+  /prices/lithium/index:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LithiumIndexDTO'
+        required: false
+      tags:
+      - Lithium
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexApiResponse'
+          description: Successful operation
+        '401':
+          description: unauthorized
+        '403':
+          description: Client does not have permission to access this resource
+      security:
+      - api_key:
+        - lithium:read
+        - prices:lithium
+      operationId: lithium-index
+      summary: Index
+components:
+  schemas:
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
+    LithiumPricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              grade:
+                type:
+                - string
+                - 'null'
+                example: Battery
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+            required:
+            - name
+            - category
+            - purity
+            - unitOfMeasure
+            - priceType
+            - currency
+            - series
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    Purity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Min 99.0%
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
+        name:
+          type: string
+          example: Lithium Carbonate
+        alias:
+          type:
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
+    IndexApiResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  updateFrequency:
+                    type: string
+                    example: 2wk
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    DataSummary:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        dailyChange:
+          description: Daily percentage change of the current value compared to the value from the previous day.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        weeklyChange:
+          description: Weekly percentage change of the current value compared to the value from the previous week.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        biWeeklyChange:
+          description: Bi-weekly percentage change of the current value compared to the value from two weeks ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        monthlyChange:
+          description: Monthly percentage change of the current value compared to the value from the previous month.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        quarterlyMonthsChange:
+          description: Quarterly percentage change of the current value compared to the value from three months ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        sixMonthsChange:
+          description: Semi-annual percentage change of the current value compared to the value from six months ago.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          description: Year-on-year percentage change of the current value compared to the value from the same period last year.
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    LithiumPricesDTO:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        shippingRoutes:
+          description: Shipping routes by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - FOB S America
+          - FOB N America
+          - FOB Australia
+          - EXW China
+          - CIF N America
+          - CIF EU
+          - CIF Asia (spot)
+          - CIF Asia (contract)
+          - CIF Asia (combined)
+          - CIF Asia
+        categories:
+          description: Categories by which to filter
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Lithium Carbonate
+              isSustainable:
+                type: boolean
+                example: false
+            required:
+            - name
+        purities:
+          description: Purities by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - 6%
+          - Min 55.0%
+          - Min 56.5%
+          - Min 99.0%
+          - Min 99.2%
+          - Min 99.5%
+        priceTypes:
+          description: Price types by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Daily Price Indicator
+          - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    LithiumPricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Lithium Carbonate
+              alias:
+                type:
+                - string
+                - 'null'
+                example: null
+              chemicalCode:
+                type:
+                - string
+                - 'null'
+                example: LC
+              frequency:
+                type: string
+                example: 2wk
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    grade:
+                      type:
+                      - string
+                      - 'null'
+                      example: Battery
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    LithiumIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Lithium Carbonate
+          - Lithium Hydroxide
+          - Lithium
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
+    LithiumSummaryDTO:
+      type: object
+      properties:
+        shippingRoutes:
+          description: Shipping routes by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - FOB S America
+          - FOB N America
+          - FOB Australia
+          - EXW China
+          - CIF N America
+          - CIF EU
+          - CIF Asia (spot)
+          - CIF Asia (contract)
+          - CIF Asia (combined)
+          - CIF Asia
+        categories:
+          description: Categories by which to filter
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Lithium Carbonate
+              isSustainable:
+                type: boolean
+                example: false
+            required:
+            - name
+        purities:
+          description: Purities by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - 6%
+          - Min 55.0%
+          - Min 56.5%
+          - Min 99.0%
+          - Min 99.2%
+          - Min 99.5%
+        priceTypes:
+          description: Price types by which to filter
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Price Indicator
+          - Global Weighted Average
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

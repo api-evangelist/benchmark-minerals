@@ -1,0 +1,62 @@
+{
+  "provider": "benchmark-minerals",
+  "sources": [
+    "_original/benchmark-minerals-prices-api.yml"
+  ],
+  "outputs": [
+    "benchmark-minerals-anodes-api-openapi.yml",
+    "benchmark-minerals-black-mass-api-openapi.yml",
+    "benchmark-minerals-cathodes-api-openapi.yml",
+    "benchmark-minerals-cobalt-api-openapi.yml",
+    "benchmark-minerals-electrolyte-api-openapi.yml",
+    "benchmark-minerals-lithium-api-openapi.yml",
+    "benchmark-minerals-lithium-ion-battery-api-openapi.yml",
+    "benchmark-minerals-lithium-ion-battery-raw-material-api-openapi.yml",
+    "benchmark-minerals-manganese-api-openapi.yml",
+    "benchmark-minerals-natural-graphite-api-openapi.yml",
+    "benchmark-minerals-nickel-api-openapi.yml",
+    "benchmark-minerals-rare-earths-api-openapi.yml",
+    "benchmark-minerals-spotlight-api-openapi.yml",
+    "benchmark-minerals-synthetic-graphite-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "benchmark-minerals-prices-api.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Anodes",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Black Mass",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Cathodes",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Cobalt",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Electrolyte",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Lithium",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Lithium ion Battery",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Lithium ion Battery Raw Material",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Manganese",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Natural Graphite",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Nickel",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Rare Earths",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Spotlight",
+    "benchmark-minerals-prices-api.yml: declared missing tag: Synthetic-Graphite",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/benchmark-minerals-prices-api_2.yml: archived document superseded by a larger archived document",
+    "benchmark-minerals-anodes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-black-mass-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-cathodes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-cobalt-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-electrolyte-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-lithium-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-lithium-ion-battery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-lithium-ion-battery-raw-material-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-manganese-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-natural-graphite-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-nickel-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-rare-earths-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-spotlight-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benchmark-minerals-synthetic-graphite-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
