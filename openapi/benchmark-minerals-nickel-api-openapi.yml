@@ -96,65 +96,6 @@ paths:
       summary: Index
 components:
   schemas:
-    NickelPurities:
-      description: purities in the store
-      type: array
-      items:
-        type: string
-      example:
-      - Aggregate MHP
-      - Min 35%
-      - Min 22%
-      - 100% Ni Contained
-    UnitOfMeasure:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Tonne
-        symbol:
-          type:
-          - string
-          - 'null'
-          example: t
-    NickelFindSummaryPricesRequest:
-      type: object
-      properties:
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        categories:
-          $ref: '#/components/schemas/NickelCategories'
-        shippingRoutes:
-          $ref: '#/components/schemas/NickelRegions'
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-          - Payable
-    ShippingRoute:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: CIF Asia
-        alias:
-          type:
-          - string
-          - 'null'
-          example: CIF Asia (Combined)
     NickelPricesApiResponse:
       type: object
       properties:
@@ -188,6 +129,57 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Series'
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
     NickelPricesSummaryApiResponse:
       type: object
       properties:
@@ -244,35 +236,133 @@ components:
                       $ref: '#/components/schemas/PriceType'
                     data:
                       $ref: '#/components/schemas/DataSummary'
-    Purity:
+    NickelFindSummaryPricesRequest:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          $ref: '#/components/schemas/NickelCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/NickelRegions'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Payable
+    NickelRegions:
+      description: regions in the store
+      type: array
+      items:
+        type: string
+      example:
+      - NiSO4
+      - NiSO4 premium over global refined nickel
+      - Mixed Hydroxide Precipitate
+      - Normalisation Factors
+    NickelPurities:
+      description: purities in the store
+      type: array
+      items:
+        type: string
+      example:
+      - Aggregate MHP
+      - Min 35%
+      - Min 22%
+      - 100% Ni Contained
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    NickelIndexApiResponse:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Nickel
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: nickel
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: nickel
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    ShippingRoute:
       type: object
       properties:
         id:
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
         name:
           type: string
-          example: Min 99.0%
-    Category:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 788353e5-3d01-4836-a333-9da2dc06141c
-        name:
-          type: string
-          example: Lithium Carbonate
+          example: CIF Asia
         alias:
           type:
           - string
           - 'null'
-          example: null
-        chemicalCode:
-          type: string
-          example: LC
-        isSustainable:
-          type: boolean
-          example: false
+          example: CIF Asia (Combined)
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
     NickelCategories:
       description: categories in the store
       type: array
@@ -290,10 +380,11 @@ components:
       example:
       - name: TEST
         isSustainable: false
-    NickelIndexDTO:
-      type:
-      - object
-      - 'null'
+    NickelFindAllPricesRequest:
+      required:
+      - from
+      - to
+      type: object
       properties:
         from:
           format: yyyy-MM-dd
@@ -303,13 +394,105 @@ components:
           format: yyyy-MM-dd
           type: string
           example: 2023-01-31
-        indexes:
-          description: indexes in the store
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        categories:
+          $ref: '#/components/schemas/NickelCategories'
+        purities:
+          $ref: '#/components/schemas/NickelPurities'
+        shippingRoutes:
+          $ref: '#/components/schemas/NickelRegions'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        priceTypes:
+          description: Price type
           type: array
           items:
             type: string
           example:
-          - Nickel
+          - Price
+          - Payable
+    Purity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Min 99.0%
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
     DataSummary:
       type: object
       properties:
@@ -429,74 +612,30 @@ components:
             unit:
               type: string
               example: '%'
-    PriceType:
+    Category:
       type: object
       properties:
         id:
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
         name:
           type: string
-          example: Price
-        order:
-          type: number
-          example: 3
-    NickelIndexApiResponse:
-      type: object
-      properties:
-        $metadata:
-          type: object
-          properties:
-            product:
-              type: string
-              example: Nickel
-        data:
-          type: object
-          properties:
-            summary:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: nickel
-                  updateFrequency:
-                    type: string
-                    example: monthly
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    $ref: '#/components/schemas/DataSummaryIndex'
-            detail:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: nickel
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          format: yyyy-MM-dd
-                          type: string
-                          example: 2023-01-31
-                        value:
-                          type: number
-                          example: 435.21
-    NickelFindAllPricesRequest:
-      required:
-      - from
-      - to
-      type: object
+          example: Lithium Carbonate
+        alias:
+          type:
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
+    NickelIndexDTO:
+      type:
+      - object
+      - 'null'
       properties:
         from:
           format: yyyy-MM-dd
@@ -506,152 +645,13 @@ components:
           format: yyyy-MM-dd
           type: string
           example: 2023-01-31
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        categories:
-          $ref: '#/components/schemas/NickelCategories'
-        purities:
-          $ref: '#/components/schemas/NickelPurities'
-        shippingRoutes:
-          $ref: '#/components/schemas/NickelRegions'
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
-        priceTypes:
-          description: Price type
+        indexes:
+          description: indexes in the store
           type: array
           items:
             type: string
           example:
-          - Price
-          - Payable
-    NickelRegions:
-      description: regions in the store
-      type: array
-      items:
-        type: string
-      example:
-      - NiSO4
-      - NiSO4 premium over global refined nickel
-      - Mixed Hydroxide Precipitate
-      - Normalisation Factors
-    UnitRequest:
-      description: Drive on which data must be returned
-      type:
-      - string
-      - 'null'
-      enum:
-      - t
-      - kg
-      - lb
-      example: t
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    Currency:
-      type:
-      - object
-      - 'null'
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
-        symbol:
-          type: string
-          example: $
-    CurrencyRequest:
-      type:
-      - string
-      - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
-    Series:
-      type: object
-      properties:
-        date:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        valueLow:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        valueHigh:
-          type:
-          - number
-          - 'null'
-          example: 2000
-        valueMid:
-          type: number
-          example: 3000
-    DataSummaryIndex:
-      type: object
-      properties:
-        today:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        last:
-          type:
-          - number
-          - 'null'
-          example: 1100
-        latestChange:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearOnYear:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearToDate:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
+          - Nickel
   securitySchemes:
     api_key:
       type: apiKey

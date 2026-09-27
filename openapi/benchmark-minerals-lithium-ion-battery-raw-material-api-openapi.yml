@@ -46,6 +46,52 @@ paths:
       summary: Index
 components:
   schemas:
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
     IndexApiResponseV2:
       type: object
       properties:
@@ -117,52 +163,6 @@ components:
             type: string
           example:
           - LFP
-    DataSummaryIndex:
-      type: object
-      properties:
-        today:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        last:
-          type:
-          - number
-          - 'null'
-          example: 1100
-        latestChange:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearOnYear:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearToDate:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
   securitySchemes:
     api_key:
       type: apiKey

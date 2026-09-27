@@ -55,45 +55,6 @@ paths:
       description: List the spotlight prices
 components:
   schemas:
-    ValidationRequestError:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            example: field
-          msg:
-            type: string
-            example: Field from is required
-          path:
-            type: string
-            example: from
-          location:
-            type: string
-            example: body
-    SpotlightPricesDTO:
-      required:
-      - currency
-      type: object
-      properties:
-        currency:
-          type: string
-          example: USD
-    UnitOfMeasure:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Tonne
-        symbol:
-          type:
-          - string
-          - 'null'
-          example: t
     SpotlightPricesApiResponse:
       type: object
       properties:
@@ -150,6 +111,45 @@ components:
                         type: string
                         description: Unit of measurement for the trend value.
                         example: '%'
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    SpotlightPricesDTO:
+      required:
+      - currency
+      type: object
+      properties:
+        currency:
+          type: string
+          example: USD
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
   securitySchemes:
     api_key:
       type: apiKey

@@ -107,6 +107,100 @@ paths:
       summary: Index
 components:
   schemas:
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
     UnitRequest:
       description: Drive on which data must be returned
       type:
@@ -117,26 +211,41 @@ components:
       - kg
       - lb
       example: t
-    Category:
+    CathodeIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Cathode
+          - ESS
+          - EV
+          - Portable
+    PriceType:
       type: object
       properties:
         id:
           type: string
-          example: 788353e5-3d01-4836-a333-9da2dc06141c
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
         name:
           type: string
-          example: Lithium Carbonate
-        alias:
-          type:
-          - string
-          - 'null'
-          example: null
-        chemicalCode:
-          type: string
-          example: LC
-        isSustainable:
-          type: boolean
-          example: false
+          example: Price
+        order:
+          type: number
+          example: 3
     UnitOfMeasure:
       type: object
       properties:
@@ -187,96 +296,26 @@ components:
           - Price
         unitOfMeasures:
           $ref: '#/components/schemas/UnitOfMeasuresRequest'
-    IndexApiResponse:
+    Series:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            summary:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: Lithium
-                  updateFrequency:
-                    type: string
-                    example: 2wk
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    $ref: '#/components/schemas/DataSummaryIndex'
-            detail:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: Lithium
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          format: yyyy-MM-dd
-                          type: string
-                          example: 2023-01-31
-                        value:
-                          type: number
-                          example: 435.21
-    CathodesPricesApiResponse:
-      type: object
-      properties:
-        $metadata:
-          type: object
-          properties:
-            product:
-              type: string
-              example: Cathode
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The name of the grade
-              category:
-                $ref: '#/components/schemas/Category'
-              shippingRoutes:
-                $ref: '#/components/schemas/ShippingRoute'
-              unitOfMeasure:
-                $ref: '#/components/schemas/UnitOfMeasure'
-              currency:
-                $ref: '#/components/schemas/Currency'
-              priceType:
-                $ref: '#/components/schemas/PriceType'
-              series:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Series'
-    ShippingRoute:
-      type: object
-      properties:
-        id:
+        date:
+          format: yyyy-MM-dd
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: CIF Asia
-        alias:
+          example: 2023-01-31
+        valueLow:
           type:
-          - string
+          - number
           - 'null'
-          example: CIF Asia (Combined)
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
     CathodesFindAllPricesDTO:
       required:
       - from
@@ -324,6 +363,18 @@ components:
           - Price
         unitOfMeasures:
           $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
     DataSummary:
       type: object
       properties:
@@ -443,46 +494,26 @@ components:
             unit:
               type: string
               example: '%'
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    PriceType:
+    Category:
       type: object
       properties:
         id:
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
         name:
           type: string
-          example: Price
-        order:
-          type: number
-          example: 3
-    ValidationRequestError:
-      type: array
-      items:
-        type: object
-        properties:
+          example: Lithium Carbonate
+        alias:
           type:
-            type: string
-            example: field
-          msg:
-            type: string
-            example: Field from is required
-          path:
-            type: string
-            example: from
-          location:
-            type: string
-            example: body
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
     CathodesPricesSummaryApiResponse:
       type: object
       properties:
@@ -537,124 +568,93 @@ components:
                       $ref: '#/components/schemas/PriceType'
                     data:
                       $ref: '#/components/schemas/DataSummary'
-    Currency:
-      type:
-      - object
-      - 'null'
+    IndexApiResponse:
+      type: object
       properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
-        symbol:
-          type: string
-          example: $
-    CurrencyRequest:
-      type:
-      - string
-      - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
-    CathodeIndexDTO:
-      type:
-      - object
-      - 'null'
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  updateFrequency:
+                    type: string
+                    example: 2wk
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: Lithium
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    CathodesPricesApiResponse:
+      type: object
       properties:
-        from:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        to:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        indexes:
-          description: indexes in the store
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Cathode
+        data:
           type: array
           items:
-            type: string
-          example:
-          - Cathode
-          - ESS
-          - EV
-          - Portable
-    Series:
-      type: object
-      properties:
-        date:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        valueLow:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        valueHigh:
-          type:
-          - number
-          - 'null'
-          example: 2000
-        valueMid:
-          type: number
-          example: 3000
-    DataSummaryIndex:
-      type: object
-      properties:
-        today:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        last:
-          type:
-          - number
-          - 'null'
-          example: 1100
-        latestChange:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearOnYear:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearToDate:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              shippingRoutes:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
   securitySchemes:
     api_key:
       type: apiKey

@@ -129,6 +129,23 @@ paths:
         - prices:cobalt
 components:
   schemas:
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
     UnitOfMeasure:
       type: object
       properties:
@@ -143,6 +160,157 @@ components:
           - string
           - 'null'
           example: t
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    CobaltPricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
+    CobaltPricesSummaryApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: Cobalt Metal
+              alias:
+                type:
+                - string
+                - 'null'
+                example: null
+              chemicalCode:
+                type:
+                - string
+                - 'null'
+                example: Co Metal
+              frequency:
+                type: string
+                example: 2wk
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the grade
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    CobaltRequestIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type:
+          - string
+          - 'null'
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type:
+          - string
+          - 'null'
+          example: 2023-01-01
+        indexes:
+          description: indexes in the store
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          example:
+          - Cobalt
     ShippingRoute:
       type: object
       properties:
@@ -157,6 +325,67 @@ components:
           - string
           - 'null'
           example: CIF Asia (Combined)
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
+    IndexApiResponseV2:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: test
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
     Purity:
       type: object
       properties:
@@ -166,40 +395,67 @@ components:
         name:
           type: string
           example: Min 99.0%
-    Category:
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+    PriceType:
       type: object
       properties:
         id:
           type: string
-          example: 788353e5-3d01-4836-a333-9da2dc06141c
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
         name:
           type: string
-          example: Lithium Carbonate
-        alias:
-          type:
-          - string
-          - 'null'
-          example: null
-        chemicalCode:
-          type: string
-          example: LC
-        isSustainable:
-          type: boolean
-          example: false
-    CobaltPricesDTO:
-      required:
-      - from
-      - to
+          example: Price
+        order:
+          type: number
+          example: 3
+    CobaltSummaryDTO:
       type: object
       properties:
-        from:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-01
-        to:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
         currency:
           $ref: '#/components/schemas/CurrencyRequest'
         unit:
@@ -224,14 +480,6 @@ components:
           - Co Metal
           - Co(OH)2
           - Mixed Hydroxide Precipitate
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-          - Payable
         purities:
           description: categories in the store
           type: array
@@ -244,8 +492,28 @@ components:
           - Min 72.8%
           - Min 99.8%
           - Aggregate MHP
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Payable
         unitOfMeasures:
           $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
     DataSummary:
       type: object
       properties:
@@ -365,71 +633,40 @@ components:
             unit:
               type: string
               example: '%'
-    CobaltPricesSummaryApiResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-              name:
-                type: string
-                example: Cobalt Metal
-              alias:
-                type:
-                - string
-                - 'null'
-                example: null
-              chemicalCode:
-                type:
-                - string
-                - 'null'
-                example: Co Metal
-              frequency:
-                type: string
-                example: 2wk
-              isSustainable:
-                type: boolean
-                example: false
-              series:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: The name of the grade
-                    shippingRoute:
-                      $ref: '#/components/schemas/ShippingRoute'
-                    purity:
-                      $ref: '#/components/schemas/Purity'
-                    unitOfMeasure:
-                      $ref: '#/components/schemas/UnitOfMeasure'
-                    currency:
-                      $ref: '#/components/schemas/Currency'
-                    priceType:
-                      $ref: '#/components/schemas/PriceType'
-                    data:
-                      $ref: '#/components/schemas/DataSummary'
-    PriceType:
+    Category:
       type: object
       properties:
         id:
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
         name:
           type: string
-          example: Price
-        order:
-          type: number
-          example: 3
-    CobaltSummaryDTO:
+          example: Lithium Carbonate
+        alias:
+          type:
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
+    CobaltPricesDTO:
+      required:
+      - from
+      - to
       type: object
       properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
         currency:
           $ref: '#/components/schemas/CurrencyRequest'
         unit:
@@ -454,6 +691,14 @@ components:
           - Co Metal
           - Co(OH)2
           - Mixed Hydroxide Precipitate
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Payable
         purities:
           description: categories in the store
           type: array
@@ -466,253 +711,8 @@ components:
           - Min 72.8%
           - Min 99.8%
           - Aggregate MHP
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-          - Payable
         unitOfMeasures:
           $ref: '#/components/schemas/UnitOfMeasuresRequest'
-    CobaltPricesApiResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The name of the grade
-              category:
-                $ref: '#/components/schemas/Category'
-              purity:
-                $ref: '#/components/schemas/Purity'
-              shippingRoute:
-                $ref: '#/components/schemas/ShippingRoute'
-              unitOfMeasure:
-                $ref: '#/components/schemas/UnitOfMeasure'
-              currency:
-                $ref: '#/components/schemas/Currency'
-              priceType:
-                $ref: '#/components/schemas/PriceType'
-              series:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Series'
-    UnitRequest:
-      description: Drive on which data must be returned
-      type:
-      - string
-      - 'null'
-      enum:
-      - t
-      - kg
-      - lb
-      example: t
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    IndexApiResponseV2:
-      type: object
-      properties:
-        $metadata:
-          type: object
-          properties:
-            product:
-              type: string
-              example: test
-        data:
-          type: object
-          properties:
-            summary:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: test
-                  updateFrequency:
-                    type: string
-                    example: monthly
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    $ref: '#/components/schemas/DataSummaryIndex'
-            detail:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: test
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          format: yyyy-MM-dd
-                          type: string
-                          example: 2023-01-31
-                        value:
-                          type: number
-                          example: 435.21
-    CobaltRequestIndexDTO:
-      type:
-      - object
-      - 'null'
-      properties:
-        from:
-          format: yyyy-MM-dd
-          type:
-          - string
-          - 'null'
-          example: 2023-01-01
-        to:
-          format: yyyy-MM-dd
-          type:
-          - string
-          - 'null'
-          example: 2023-01-01
-        indexes:
-          description: indexes in the store
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          example:
-          - Cobalt
-    ValidationRequestError:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            example: field
-          msg:
-            type: string
-            example: Field from is required
-          path:
-            type: string
-            example: from
-          location:
-            type: string
-            example: body
-    Currency:
-      type:
-      - object
-      - 'null'
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
-        symbol:
-          type: string
-          example: $
-    CurrencyRequest:
-      type:
-      - string
-      - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
-    Series:
-      type: object
-      properties:
-        date:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        valueLow:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        valueHigh:
-          type:
-          - number
-          - 'null'
-          example: 2000
-        valueMid:
-          type: number
-          example: 3000
-    DataSummaryIndex:
-      type: object
-      properties:
-        today:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        last:
-          type:
-          - number
-          - 'null'
-          example: 1100
-        latestChange:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearOnYear:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearToDate:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
   securitySchemes:
     api_key:
       type: apiKey
