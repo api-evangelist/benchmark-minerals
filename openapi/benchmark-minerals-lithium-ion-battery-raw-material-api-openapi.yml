@@ -46,52 +46,6 @@ paths:
       summary: Index
 components:
   schemas:
-    DataSummaryIndex:
-      type: object
-      properties:
-        today:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        last:
-          type:
-          - number
-          - 'null'
-          example: 1100
-        latestChange:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearOnYear:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
-        yearToDate:
-          type:
-          - object
-          - 'null'
-          properties:
-            value:
-              type: number
-              example: -5
-            unit:
-              type: string
-              example: '%'
     IndexApiResponseV2:
       type: object
       properties:
@@ -143,6 +97,52 @@ components:
                         value:
                           type: number
                           example: 435.21
+    DataSummaryIndex:
+      type: object
+      properties:
+        today:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        last:
+          type:
+          - number
+          - 'null'
+          example: 1100
+        latestChange:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearOnYear:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
+        yearToDate:
+          type:
+          - object
+          - 'null'
+          properties:
+            value:
+              type: number
+              example: -5
+            unit:
+              type: string
+              example: '%'
     LithiumIonBatteryRawMaterialIndexDTO:
       type:
       - object

@@ -96,23 +96,6 @@ paths:
       summary: Index
 components:
   schemas:
-    Currency:
-      type:
-      - object
-      - 'null'
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
-        symbol:
-          type: string
-          example: $
     RareEarthsRoutes:
       description: routes in the store
       type: array
@@ -120,289 +103,6 @@ components:
         type: string
       example:
       - DDP China
-    UnitOfMeasure:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Tonne
-        symbol:
-          type:
-          - string
-          - 'null'
-          example: t
-    Series:
-      type: object
-      properties:
-        date:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        valueLow:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        valueHigh:
-          type:
-          - number
-          - 'null'
-          example: 2000
-        valueMid:
-          type: number
-          example: 3000
-    RareEarthsPricesSummaryApiResponse:
-      type: object
-      properties:
-        $metadata:
-          type: object
-          properties:
-            product:
-              type: string
-              example: Rare Earths
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-              name:
-                type: string
-                example: test
-              alias:
-                type:
-                - string
-                - 'null'
-                example: null
-              chemicalCode:
-                type:
-                - string
-                - 'null'
-                example: LC
-              frequency:
-                type: string
-                example: monthly
-              isSustainable:
-                type: boolean
-                example: false
-              series:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    shippingRoute:
-                      $ref: '#/components/schemas/ShippingRoute'
-                    purity:
-                      $ref: '#/components/schemas/Purity'
-                    unitOfMeasure:
-                      $ref: '#/components/schemas/UnitOfMeasure'
-                    currency:
-                      $ref: '#/components/schemas/Currency'
-                    priceType:
-                      $ref: '#/components/schemas/PriceType'
-                    data:
-                      $ref: '#/components/schemas/DataSummary'
-    RareEarthsFindSummaryPricesRequest:
-      type: object
-      properties:
-        categories:
-          $ref: '#/components/schemas/RareEarthsCategories'
-        shippingRoutes:
-          $ref: '#/components/schemas/RareEarthsRoutes'
-        purities:
-          $ref: '#/components/schemas/RareEarthsPurities'
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-          - Weighted Average Price
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    RareEarthsCategories:
-      description: categories in the store
-      type: array
-      items:
-        type: string
-      example:
-      - Praseodymium-Neodymium Oxide
-      - Dysprosium Oxide
-      - Terbium Oxide
-      - Samarium Oxide
-      - Li Price per Percentage Point
-      - China Weighted Index
-      - China Weighted Average
-    ShippingRoute:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: CIF Asia
-        alias:
-          type:
-          - string
-          - 'null'
-          example: CIF Asia (Combined)
-    UnitRequest:
-      description: Drive on which data must be returned
-      type:
-      - string
-      - 'null'
-      enum:
-      - t
-      - kg
-      - lb
-      example: t
-    RareEarthsFindAllPricesRequest:
-      required:
-      - from
-      - to
-      type: object
-      properties:
-        from:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        to:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        categories:
-          $ref: '#/components/schemas/RareEarthsCategories'
-        shippingRoutes:
-          $ref: '#/components/schemas/RareEarthsRoutes'
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        purities:
-          $ref: '#/components/schemas/RareEarthsPurities'
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-          - Weighted Average Price
-    RareEarthsPurities:
-      description: purities in the store
-      type: array
-      items:
-        type: string
-      example:
-      - '>22%>70%'
-      - 99.0-99.5%
-      - 99.0-99.9%
-    Purity:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
-        name:
-          type: string
-          example: Min 99.0%
-    IndexApiResponseV2:
-      type: object
-      properties:
-        $metadata:
-          type: object
-          properties:
-            product:
-              type: string
-              example: test
-        data:
-          type: object
-          properties:
-            summary:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: test
-                  updateFrequency:
-                    type: string
-                    example: monthly
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    $ref: '#/components/schemas/DataSummaryIndex'
-            detail:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                    example: test
-                  order:
-                    type: number
-                    example: 1
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          format: yyyy-MM-dd
-                          type: string
-                          example: 2023-01-31
-                        value:
-                          type: number
-                          example: 435.21
-    RareEarthsIndexDTO:
-      type:
-      - object
-      - 'null'
-      properties:
-        from:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        to:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        indexes:
-          description: indexes in the store
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          example:
-          - Rare Earths
     DataSummaryIndex:
       type: object
       properties:
@@ -482,30 +182,76 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Series'
-    PriceType:
+    RareEarthsPricesSummaryApiResponse:
       type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: Rare Earths
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+              name:
+                type: string
+                example: test
+              alias:
+                type:
+                - string
+                - 'null'
+                example: null
+              chemicalCode:
+                type:
+                - string
+                - 'null'
+                example: LC
+              frequency:
+                type: string
+                example: monthly
+              isSustainable:
+                type: boolean
+                example: false
+              series:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    shippingRoute:
+                      $ref: '#/components/schemas/ShippingRoute'
+                    purity:
+                      $ref: '#/components/schemas/Purity'
+                    unitOfMeasure:
+                      $ref: '#/components/schemas/UnitOfMeasure'
+                    currency:
+                      $ref: '#/components/schemas/Currency'
+                    priceType:
+                      $ref: '#/components/schemas/PriceType'
+                    data:
+                      $ref: '#/components/schemas/DataSummary'
+    Currency:
+      type:
+      - object
+      - 'null'
       properties:
         id:
           type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
         name:
           type: string
-          example: Price
-        order:
-          type: number
-          example: 3
-    CurrencyRequest:
-      type:
-      - string
-      - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
     DataSummary:
       type: object
       properties:
@@ -625,6 +371,28 @@ components:
             unit:
               type: string
               example: '%'
+    RareEarthsIndexDTO:
+      type:
+      - object
+      - 'null'
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        indexes:
+          description: indexes in the store
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          example:
+          - Rare Earths
     Category:
       type: object
       properties:
@@ -645,6 +413,238 @@ components:
         isSustainable:
           type: boolean
           example: false
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    RareEarthsFindSummaryPricesRequest:
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/RareEarthsCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/RareEarthsRoutes'
+        purities:
+          $ref: '#/components/schemas/RareEarthsPurities'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Weighted Average Price
+    IndexApiResponseV2:
+      type: object
+      properties:
+        $metadata:
+          type: object
+          properties:
+            product:
+              type: string
+              example: test
+        data:
+          type: object
+          properties:
+            summary:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  updateFrequency:
+                    type: string
+                    example: monthly
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    $ref: '#/components/schemas/DataSummaryIndex'
+            detail:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    example: test
+                  order:
+                    type: number
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          format: yyyy-MM-dd
+                          type: string
+                          example: 2023-01-31
+                        value:
+                          type: number
+                          example: 435.21
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    RareEarthsFindAllPricesRequest:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        categories:
+          $ref: '#/components/schemas/RareEarthsCategories'
+        shippingRoutes:
+          $ref: '#/components/schemas/RareEarthsRoutes'
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        purities:
+          $ref: '#/components/schemas/RareEarthsPurities'
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+          - Weighted Average Price
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    Purity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Min 99.0%
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
+    RareEarthsPurities:
+      description: purities in the store
+      type: array
+      items:
+        type: string
+      example:
+      - '>22%>70%'
+      - 99.0-99.5%
+      - 99.0-99.9%
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
+    RareEarthsCategories:
+      description: categories in the store
+      type: array
+      items:
+        type: string
+      example:
+      - Praseodymium-Neodymium Oxide
+      - Dysprosium Oxide
+      - Terbium Oxide
+      - Samarium Oxide
+      - Li Price per Percentage Point
+      - China Weighted Index
+      - China Weighted Average
+    UnitOfMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
   securitySchemes:
     api_key:
       type: apiKey
