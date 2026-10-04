@@ -94,93 +94,20 @@ paths:
         - Purity'
 components:
   schemas:
-    ManganesePricesApiResponse:
+    UnitOfMeasure:
       type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The name of the grade
-              category:
-                $ref: '#/components/schemas/Category'
-              purity:
-                $ref: '#/components/schemas/Purity'
-              shippingRoute:
-                $ref: '#/components/schemas/ShippingRoute'
-              unitOfMeasure:
-                $ref: '#/components/schemas/UnitOfMeasure'
-              currency:
-                $ref: '#/components/schemas/Currency'
-              priceType:
-                $ref: '#/components/schemas/PriceType'
-              series:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Series'
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    PriceType:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
-        name:
-          type: string
-          example: Price
-        order:
-          type: number
-          example: 3
-    Category:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 788353e5-3d01-4836-a333-9da2dc06141c
-        name:
-          type: string
-          example: Lithium Carbonate
-        alias:
-          type:
-          - string
-          - 'null'
-          example: null
-        chemicalCode:
-          type: string
-          example: LC
-        isSustainable:
-          type: boolean
-          example: false
-    Currency:
-      type:
-      - object
-      - 'null'
       properties:
         id:
           type: string
           example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
         name:
           type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
+          example: Tonne
         symbol:
-          type: string
-          example: $
+          type:
+          - string
+          - 'null'
+          example: t
     Series:
       type: object
       properties:
@@ -218,101 +145,60 @@ components:
           location:
             type: string
             example: body
-    ManganeseSummaryDTO:
-      type: object
-      properties:
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        shippingRoutes:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - EXW China
-        categories:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - Manganese Sulphate
-        purities:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - 32%
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
-    UnitRequest:
-      description: Drive on which data must be returned
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
       type:
-      - string
+      - array
       - 'null'
-      enum:
+      items:
+        type: string
+      example:
       - t
-      - kg
-      - lb
-      example: t
-    ManganesePricesDTO:
-      required:
-      - from
-      - to
+      - kwh
+      - '%'
+    Purity:
       type: object
       properties:
-        from:
-          format: yyyy-MM-dd
+        id:
           type: string
-          example: 2023-01-01
-        to:
-          format: yyyy-MM-dd
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
           type: string
-          example: 2023-01-31
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        shippingRoutes:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - EXW China
-        categories:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - Manganese Sulphate
-        purities:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - 32%
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+          example: Min 99.0%
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 788353e5-3d01-4836-a333-9da2dc06141c
+        name:
+          type: string
+          example: Lithium Carbonate
+        alias:
+          type:
+          - string
+          - 'null'
+          example: null
+        chemicalCode:
+          type: string
+          example: LC
+        isSustainable:
+          type: boolean
+          example: false
     ManganesePricesSummaryApiResponse:
       type: object
       properties:
@@ -363,6 +249,140 @@ components:
                       $ref: '#/components/schemas/PriceType'
                     data:
                       $ref: '#/components/schemas/DataSummary'
+    ManganeseSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Manganese Sulphate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - 32%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    ManganesePricesDTO:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-01
+        to:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Manganese Sulphate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - 32%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
+    ManganesePricesApiResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the grade
+              category:
+                $ref: '#/components/schemas/Category'
+              purity:
+                $ref: '#/components/schemas/Purity'
+              shippingRoute:
+                $ref: '#/components/schemas/ShippingRoute'
+              unitOfMeasure:
+                $ref: '#/components/schemas/UnitOfMeasure'
+              currency:
+                $ref: '#/components/schemas/Currency'
+              priceType:
+                $ref: '#/components/schemas/PriceType'
+              series:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Series'
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
     DataSummary:
       type: object
       properties:
@@ -482,19 +502,24 @@ components:
             unit:
               type: string
               example: '%'
-    CurrencyRequest:
+    Currency:
       type:
-      - string
+      - object
       - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
-    Purity:
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    PriceType:
       type: object
       properties:
         id:
@@ -502,35 +527,10 @@ components:
           example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
         name:
           type: string
-          example: Min 99.0%
-    UnitOfMeasure:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Tonne
-        symbol:
-          type:
-          - string
-          - 'null'
-          example: t
-    ShippingRoute:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: CIF Asia
-        alias:
-          type:
-          - string
-          - 'null'
-          example: CIF Asia (Combined)
+          example: Price
+        order:
+          type: number
+          example: 3
   securitySchemes:
     api_key:
       type: apiKey
