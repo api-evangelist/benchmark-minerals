@@ -1,0 +1,12 @@
+{
+ "url": "https://www.benchmarkminerals.com/prices-api.yml",
+ "requested_url": "https://www.benchmarkminerals.com/prices-api.yml",
+ "status": 200,
+ "content_type": "application/yaml",
+ "bytes": 120302,
+ "sha256": "0d075d010360c7d92a85b6639471cfb179cd6e4af5e49147bbc3009fec296a25",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
