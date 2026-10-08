@@ -301,6 +301,10 @@ apis:
   - type: ToolCrosswalk
     url: mcp/benchmark-minerals-tool-crosswalk.yml
 common:
+  - type: RateLimits
+    url: rate-limits/benchmark-minerals-rate-limits.yml
+  - type: FinOps
+    url: finops/benchmark-minerals-finops.yml
   - type: Overlay
     url: overlays/benchmark-minerals-prices-api-overlay.yaml
   - type: Authentication
