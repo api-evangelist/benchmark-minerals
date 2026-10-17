@@ -94,91 +94,6 @@ paths:
         - Purity'
 components:
   schemas:
-    UnitOfMeasure:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Tonne
-        symbol:
-          type:
-          - string
-          - 'null'
-          example: t
-    Series:
-      type: object
-      properties:
-        date:
-          format: yyyy-MM-dd
-          type: string
-          example: 2023-01-31
-        valueLow:
-          type:
-          - number
-          - 'null'
-          example: 1000
-        valueHigh:
-          type:
-          - number
-          - 'null'
-          example: 2000
-        valueMid:
-          type: number
-          example: 3000
-    ValidationRequestError:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            example: field
-          msg:
-            type: string
-            example: Field from is required
-          path:
-            type: string
-            example: from
-          location:
-            type: string
-            example: body
-    UnitOfMeasuresRequest:
-      description: Units of measures for filtering data
-      type:
-      - array
-      - 'null'
-      items:
-        type: string
-      example:
-      - t
-      - kwh
-      - '%'
-    Purity:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
-        name:
-          type: string
-          example: Min 99.0%
-    ShippingRoute:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: CIF Asia
-        alias:
-          type:
-          - string
-          - 'null'
-          example: CIF Asia (Combined)
     Category:
       type: object
       properties:
@@ -199,6 +114,156 @@ components:
         isSustainable:
           type: boolean
           example: false
+    Currency:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Dollar
+        iso:
+          type: string
+          example: USD
+        symbol:
+          type: string
+          example: $
+    CurrencyRequest:
+      type:
+      - string
+      - 'null'
+      enum:
+      - USD
+      - CNY
+      - JPY
+      - AUD
+      - KRW
+      - EUR
+      example: CNY
+    ShippingRoute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: CIF Asia
+        alias:
+          type:
+          - string
+          - 'null'
+          example: CIF Asia (Combined)
+    PriceType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
+        name:
+          type: string
+          example: Price
+        order:
+          type: number
+          example: 3
+    Series:
+      type: object
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: string
+          example: 2023-01-31
+        valueLow:
+          type:
+          - number
+          - 'null'
+          example: 1000
+        valueHigh:
+          type:
+          - number
+          - 'null'
+          example: 2000
+        valueMid:
+          type: number
+          example: 3000
+    UnitRequest:
+      description: Drive on which data must be returned
+      type:
+      - string
+      - 'null'
+      enum:
+      - t
+      - kg
+      - lb
+      example: t
+    UnitOfMeasuresRequest:
+      description: Units of measures for filtering data
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+      example:
+      - t
+      - kwh
+      - '%'
+    ManganeseSummaryDTO:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyRequest'
+        unit:
+          $ref: '#/components/schemas/UnitRequest'
+        shippingRoutes:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - EXW China
+        categories:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - Manganese Sulphate
+        purities:
+          description: categories in the store
+          type: array
+          items:
+            type: string
+          example:
+          - 32%
+        priceTypes:
+          description: Price type
+          type: array
+          items:
+            type: string
+          example:
+          - Price
+        unitOfMeasures:
+          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+    ValidationRequestError:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            example: field
+          msg:
+            type: string
+            example: Field from is required
+          path:
+            type: string
+            example: from
+          location:
+            type: string
+            example: body
     ManganesePricesSummaryApiResponse:
       type: object
       properties:
@@ -249,43 +314,20 @@ components:
                       $ref: '#/components/schemas/PriceType'
                     data:
                       $ref: '#/components/schemas/DataSummary'
-    ManganeseSummaryDTO:
+    UnitOfMeasure:
       type: object
       properties:
-        currency:
-          $ref: '#/components/schemas/CurrencyRequest'
-        unit:
-          $ref: '#/components/schemas/UnitRequest'
-        shippingRoutes:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - EXW China
-        categories:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - Manganese Sulphate
-        purities:
-          description: categories in the store
-          type: array
-          items:
-            type: string
-          example:
-          - 32%
-        priceTypes:
-          description: Price type
-          type: array
-          items:
-            type: string
-          example:
-          - Price
-        unitOfMeasures:
-          $ref: '#/components/schemas/UnitOfMeasuresRequest'
+        id:
+          type: string
+          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
+        name:
+          type: string
+          example: Tonne
+        symbol:
+          type:
+          - string
+          - 'null'
+          example: t
     ManganesePricesDTO:
       required:
       - from
@@ -334,18 +376,6 @@ components:
           - Price
         unitOfMeasures:
           $ref: '#/components/schemas/UnitOfMeasuresRequest'
-    CurrencyRequest:
-      type:
-      - string
-      - 'null'
-      enum:
-      - USD
-      - CNY
-      - JPY
-      - AUD
-      - KRW
-      - EUR
-      example: CNY
     ManganesePricesApiResponse:
       type: object
       properties:
@@ -373,16 +403,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Series'
-    UnitRequest:
-      description: Drive on which data must be returned
-      type:
-      - string
-      - 'null'
-      enum:
-      - t
-      - kg
-      - lb
-      example: t
     DataSummary:
       type: object
       properties:
@@ -502,24 +522,7 @@ components:
             unit:
               type: string
               example: '%'
-    Currency:
-      type:
-      - object
-      - 'null'
-      properties:
-        id:
-          type: string
-          example: 5c7f2d17-cae5-47f9-8e2f-abd141970e1b
-        name:
-          type: string
-          example: Dollar
-        iso:
-          type: string
-          example: USD
-        symbol:
-          type: string
-          example: $
-    PriceType:
+    Purity:
       type: object
       properties:
         id:
@@ -527,10 +530,7 @@ components:
           example: 5c7f2d17-cae5-47f9-8e2f-abd141970e7b
         name:
           type: string
-          example: Price
-        order:
-          type: number
-          example: 3
+          example: Min 99.0%
   securitySchemes:
     api_key:
       type: apiKey
