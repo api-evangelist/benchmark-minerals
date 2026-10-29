@@ -1,4 +1,4 @@
-# Benchmark Minerals (benchmark-minerals)
+# Benchmark Minerals
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,82 +64,143 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Benchmark Mineral Intelligence is the world's leading market intelligence and
-price reporting agency for the lithium-ion battery supply chain and energy
-transition materials. The company provides mine-to-grid supply chain data,
-price assessments, forecasts, and databases covering lithium, nickel, cobalt,
-graphite, batteries, electric vehicles, rare earths, and permanent magnets.
-Benchmark's proprietary price assessment methodologies are assured to Type 2
-IOSCO standards. API access is available to subscribers for programmatic
-integration of price data, supply chain data, and market intelligence into
-business systems and analytics platforms.
+Benchmark Mineral Intelligence is the world's leading market intelligence and price reporting agency for the lithium-ion battery supply chain and energy transition materials. The company provides mine-to-grid supply chain data, price assessments, forecasts, and databases covering lithium, nickel, cobalt, graphite, batteries, electric vehicles, rare earths, and permanent magnets. Benchmark's proprietary price assessment methodologies are assured to Type 2 IOSCO standards. API access is available to subscribers for programmatic integration of price data, supply chain data, and market intelligence into business systems and analytics platforms.
 
-**URL:** [https://www.benchmarkminerals.com](https://www.benchmarkminerals.com)
+**Areas:** Batteries · Cobalt · Critical Minerals · Electric Vehicles · Energy Transition · Graphite · Lithium · Lithium-Ion · Market Intelligence · Mining · Nickel · Price Reporting
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Benchmark Minerals on APIs.io
 
-## Tags:
+Everything profiled for Benchmark Minerals is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/benchmark-minerals/](https://apis.io/providers/benchmark-minerals/)** — or go straight to one of the APIs or properties below.
 
- - Batteries, Cobalt, Critical Minerals, Electric Vehicles, Energy Transition, Graphite, Lithium, Lithium Ion, Market Intelligence, Mining, Nickel, Price Reporting, Rare Earths, Supply Chain
+### APIs (14)
 
-## Timestamps
+- [Benchmark Minerals Anodes API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-anodes-api/) — The Anodes API from Benchmark Minerals — 3 operation(s) for anodes.
+- [Benchmark Minerals Black Mass API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-black-mass-api/) — The Black Mass API from Benchmark Minerals — 3 operation(s) for black mass.
+- [Benchmark Minerals Cathodes API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-cathodes-api/) — The Cathodes API from Benchmark Minerals — 3 operation(s) for cathodes.
+- [Benchmark Minerals Cobalt API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-cobalt-api/) — The Cobalt API from Benchmark Minerals — 3 operation(s) for cobalt.
+- [Benchmark Minerals Electrolyte API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-electrolyte-api/) — The Electrolyte API from Benchmark Minerals — 2 operation(s) for electrolyte.
+- [Benchmark Minerals Lithium API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-lithium-api/) — The Lithium API from Benchmark Minerals — 3 operation(s) for lithium.
+- [Benchmark Minerals Lithium ion Battery API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-lithium-ion-battery-api/) — The Lithium ion Battery API from Benchmark Minerals — 3 operation(s) for lithium ion battery.
+- [Benchmark Minerals Lithium ion Battery Raw Material API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-lithium-ion-battery-raw-material-api/) — The Lithium ion Battery Raw Material API from Benchmark Minerals — 1 operation(s) for lithium ion battery raw material.
+- [Benchmark Minerals Manganese API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-manganese-api/) — The Manganese API from Benchmark Minerals — 2 operation(s) for manganese.
+- [Benchmark Minerals Natural Graphite API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-natural-graphite-api/) — The Natural Graphite API from Benchmark Minerals — 3 operation(s) for natural graphite.
+- [Benchmark Minerals Nickel API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-nickel-api/) — The Nickel API from Benchmark Minerals — 3 operation(s) for nickel.
+- [Benchmark Minerals Rare Earths API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-rare-earths-api/) — The Rare Earths API from Benchmark Minerals — 3 operation(s) for rare earths.
+- [Benchmark Minerals Spotlight API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-spotlight-api/) — The Spotlight API from Benchmark Minerals — 1 operation(s) for spotlight.
+- [Benchmark Minerals Synthetic Graphite API](https://apis.io/apis/benchmark-minerals/benchmark-minerals-synthetic-graphite-api/) — The Synthetic-Graphite API from Benchmark Minerals — 3 operation(s) for synthetic-graphite.
 
-- **Created:** 2025-03-01
-- **Modified:** 2026-04-19
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Benchmark Minerals API
-The Benchmark Minerals API provides programmatic access to price data, supply
-chain data, and market intelligence for the lithium-ion battery and critical
-minerals supply chain.
+#### MCP servers (1)
 
-**Human URL:** [https://www.benchmarkminerals.com/api](https://www.benchmarkminerals.com/api)
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags:
+- [Benchmark MCP Gateway (https://mcp.benchmarkminerals.com/mcp)](https://apis.io/servers/benchmark-minerals/benchmark-mcp-gateway-https-mcp-benchmarkminerals-com-mcp/)
 
- - Batteries, Critical Minerals, Market Intelligence, Mining, Price Data, Supply Chain
+#### Overlays (1)
 
-#### Properties
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Documentation](https://www.benchmarkminerals.com/api)
-- [APIReference](https://www.benchmarkminerals.com/api/docs)
+- [Benchmark Minerals Prices Api Overlay](https://apis.io/overlays/benchmark-minerals/benchmark-minerals-prices-api-overlay/)
 
-## Common Properties
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Benchmark Minerals Authentication](https://apis.io/security/benchmark-minerals/benchmark-minerals-authentication/)
+- [Benchmark Minerals Domain Security](https://apis.io/security/benchmark-minerals/benchmark-minerals-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Benchmark Minerals Scopes](https://apis.io/scopes/benchmark-minerals/benchmark-minerals-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Benchmark Minerals Plans Pricing](https://apis.io/plans/benchmark-minerals/benchmark-minerals-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Benchmark Minerals Rate Limits](https://apis.io/rate-limits/benchmark-minerals/benchmark-minerals-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Benchmark Minerals Finops](https://apis.io/finops/benchmark-minerals/benchmark-minerals-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.benchmarkminerals.com)
-- [Benchmark Source Data Platform](https://source.benchmarkminerals.com)
-- [Price Data Subscriptions](https://www.benchmarkminerals.com/all-prices-subscription)
+- [Documentation](https://www.benchmarkminerals.com/api)
+- [API reference](https://www.benchmarkminerals.com/api/docs)
+- [Pricing](https://www.benchmarkminerals.com/plans)
+- [Support](https://www.benchmarkminerals.com/contact/a-technical-issue)
+- [Blog](https://source.benchmarkminerals.com)
+- [Terms of service](https://www.benchmarkminerals.com/terms)
+- [Privacy policy](https://www.benchmarkminerals.com/privacy)
+- [GitHub](https://github.com/benchmarkminerals)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| Price Assessments | IOSCO Type 2 assured benchmark price assessments for lithium, nickel, cobalt, graphite, rare earths, permanent magnets, and battery cells, used as reference prices in supply contracts and financial instruments. |
-| Supply Chain Data | Comprehensive mine-to-grid supply chain databases covering raw material mining, processing, cell manufacturing, and gigafactory capacity across lithium ion and sodium ion battery chemistries. |
-| Market Forecasts | Long-term supply and demand forecasts for critical battery materials and electric vehicle adoption, tracking policy shifts, capacity expansions, and technology transitions. |
-| Gigafactory Intelligence | Global tracking of battery gigafactory capacity, ownership, operating status, production volumes, and technology transitions for lithium ion and next-generation battery chemistries. |
-| API Data Integration | Enterprise API access enables subscribers to integrate Benchmark price data and supply chain databases directly into business intelligence platforms, ERP systems, and procurement workflows. |
-| Price Dashboard | Interactive price dashboard providing real-time access to benchmark prices, historical price charts, and data visualization for energy transition materials. |
+**Kin Score 48.7** — developing · rubric 0.25.0 · scored 2026-10-23
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 44.6 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 54.2 |
+| Access clarity | 71.1 |
 
-| Name | Description |
-|------|-------------|
-| Supply Chain Procurement | Battery manufacturers and EV OEMs use Benchmark price data as reference benchmarks in raw material supply contracts and procurement negotiations for lithium, nickel, cobalt, and graphite. |
-| Investment and Financial Analysis | Investors, banks, and financial institutions use Benchmark forecasts and price data to evaluate mining projects, battery companies, and energy transition investment opportunities. |
-| Strategic Planning | Corporate strategy teams and policy makers use Benchmark supply chain databases and forecasts to plan capacity investments and assess raw material availability for battery manufacturing programs. |
-| Risk Management | Supply chain managers use Benchmark price data and market intelligence to identify supply risks, monitor market conditions, and develop hedging strategies for critical mineral exposure. |
+**Agent readiness 37.1** — agent-ready
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
 
-| Name | Description |
-|------|-------------|
-| Business Intelligence Platforms | Benchmark API integrates with BI tools and data analytics platforms to embed price data and supply chain metrics in custom dashboards and reporting workflows. |
-| ERP Systems | Enterprise API access enables integration of Benchmark benchmark prices into ERP and procurement systems for automated contract indexing and raw material cost tracking. |
+**Regulatory alignment 38.5** — Energy & Utilities
 
-## Maintainers
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/benchmark-minerals/](https://apis.io/providers/benchmark-minerals/).
 
-**FN:** Kin Lane
+## How this profile is made
 
-**Email:** kin@apievangelist.com
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Benchmark Minerals: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/benchmark-minerals/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
