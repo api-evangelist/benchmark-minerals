@@ -35,7 +35,7 @@ plans:
 rate_limit_statements:
 - free Intelligence account to preview up to three pieces of content per month
 x-canonical:
-  generated: '2026-11-01'
+  generated: '2026-11-02'
   vocabulary: engine/economics/plans-canonical.yml
   models: []
   units: []
