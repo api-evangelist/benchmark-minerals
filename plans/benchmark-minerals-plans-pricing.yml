@@ -1,0 +1,63 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.benchmarkminerals.com/plans
+sources:
+- https://www.benchmarkminerals.com/plans
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T161713
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: negotiated
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: false
+note: Bespoke-proposal page; no numeric prices. Tiers by team size (up to 10 users, up to 20 users, Enterprise)
+  but no amounts. Numbers shown are commodity index values, not prices for the product.
+plan_count: 3
+plans:
+- name: 'Bundle 1: Upstream Essentials'
+  price_text: Contact Us
+  period: none
+  included_quota: Lithium, Nickel, Cobalt, Copper, Graphite & Anode, Rare Earths, Magnets & Motors, Battery
+    Chemicals
+- name: 'Bundle 2: Midstream to End-Use'
+  price_text: Contact Us
+  period: none
+  included_quota: Cathode & pCAM, Battery & Gigafactory, New Technology, EV, BESS
+- name: 'Bundle 3: Full Battery Value Chain'
+  price_text: Contact Us
+  period: none
+  included_quota: all-encompassing coverage
+rate_limit_statements:
+- free Intelligence account to preview up to three pieces of content per month
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: 'Bundle 1: Upstream Essentials'
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: 'Bundle 2: Midstream to End-Use'
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: 'Bundle 3: Full Battery Value Chain'
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
